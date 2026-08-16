@@ -13,7 +13,7 @@ import Link from 'next/link';
 export const metadata = constructMetadata({
   title: 'Daily Utility Hub — 100% Free Browser-Based Utility Tools',
   description:
-    'Powerful everyday tools for images, PDFs, calculations, students and more. No signup. No limits. 100% local browser processing.',
+    'POWERFUL EVERYDAY TOOLS FOR IMAGES, PDFS, CALCULATIONS, STUDENTS AND MORE. NO SIGNUP. NO LIMITS. 100% LOCAL BROWSER PROCESSING.',
   canonicalUrl: 'https://dailyutilityhub.com',
 });
 
@@ -25,47 +25,47 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Column Text Content */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Pill Badge */}
-            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-blue-100/80 dark:bg-indigo-950/80 text-blue-800 dark:text-indigo-300 text-xs font-black tracking-wide border border-blue-200 dark:border-indigo-800 shadow-xs">
+            {/* Pill Badge — Larger Font & Bold */}
+            <div className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-blue-100/90 dark:bg-indigo-950/90 text-blue-900 dark:text-indigo-200 text-xs sm:text-sm font-black tracking-widest uppercase border border-blue-200 dark:border-indigo-800 shadow-xs">
               <Sparkles className="w-4 h-4 text-blue-600 dark:text-indigo-400" />
-              <span>⚡ 15+ Tools • 100% Free • Private</span>
+              <span>⚡ 15+ TOOLS • 100% FREE • PRIVATE</span>
             </div>
 
-            {/* Headline matching References */}
-            <h1 className="font-heading font-black text-4xl sm:text-5xl md:text-6xl text-slate-900 dark:text-slate-100 tracking-tight leading-[1.08]">
-              One Toolbox. <br />
+            {/* Headline — BIGGER FONT (text-5xl to text-9xl), EXTRA BOLD & CAPITALIZED */}
+            <h1 className="font-heading font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-slate-900 dark:text-slate-100 tracking-tight leading-[1.02] uppercase">
+              ONE TOOLBOX. <br />
               <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400 text-transparent bg-clip-text">
-                Endless Possibilities.
+                ENDLESS POSSIBILITIES.
               </span>
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
-              Powerful everyday tools for images, PDFs, calculations, students and more. No signup. No limits.
+            {/* Subtitle — BIGGER FONT (text-lg to text-2xl), EXTRA BOLD & CAPITALIZED */}
+            <p className="text-lg sm:text-xl md:text-2xl text-slate-800 dark:text-slate-100 max-w-2xl leading-relaxed font-black uppercase tracking-wide">
+              POWERFUL EVERYDAY TOOLS FOR IMAGES, PDFS, CALCULATIONS, STUDENTS AND MORE. NO SIGNUP. NO LIMITS.
             </p>
 
             {/* Prominent Search Bar with Integrated Search Button */}
             <div className="pt-2">
-              <SearchBar />
+              <SearchBar placeholder="SEARCH ANY TOOL YOU NEED (E.G. COMPRESS IMAGE, MERGE PDF, EMI)..." />
             </div>
 
-            {/* 4 Trust Chips matching Reference */}
-            <div className="pt-4 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-extrabold text-slate-700 dark:text-slate-300">
-              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Zap className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                <span>Blazing Fast</span>
+            {/* 4 Trust Chips — Larger Font & Extra Bold */}
+            <div className="pt-4 flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-slate-100">
+              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Zap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span>BLAZING FAST</span>
               </div>
-              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Target className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span>100% Free</span>
+              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <span>100% FREE</span>
               </div>
-              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Lock className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                <span>No Signup</span>
+              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Lock className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <span>NO SIGNUP</span>
               </div>
-              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <ShieldCheck className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
-                <span>Privacy First</span>
+              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <ShieldCheck className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <span>PRIVACY FIRST</span>
               </div>
             </div>
           </div>
