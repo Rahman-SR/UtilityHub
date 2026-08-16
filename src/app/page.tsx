@@ -25,22 +25,22 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Column Text Content */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Pill Badge — Larger Font & Bold */}
-            <div className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-blue-100/90 dark:bg-indigo-950/90 text-blue-900 dark:text-indigo-200 text-xs sm:text-sm font-black tracking-widest uppercase border border-blue-200 dark:border-indigo-800 shadow-xs">
+            {/* Pill Badge — Well Proportioned */}
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-indigo-950/80 text-blue-800 dark:text-indigo-300 text-xs font-black tracking-wider uppercase border border-blue-200 dark:border-indigo-800 shadow-xs">
               <Sparkles className="w-4 h-4 text-blue-600 dark:text-indigo-400" />
               <span>⚡ 15+ TOOLS • 100% FREE • PRIVATE</span>
             </div>
 
-            {/* Headline — BIGGER FONT (text-5xl to text-9xl), EXTRA BOLD & CAPITALIZED */}
-            <h1 className="font-heading font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-slate-900 dark:text-slate-100 tracking-tight leading-[1.02] uppercase">
+            {/* Headline — Balanced, Clean & Elegant (text-3xl to text-6xl) */}
+            <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-slate-900 dark:text-slate-100 tracking-tight leading-[1.1] uppercase">
               ONE TOOLBOX. <br />
               <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400 text-transparent bg-clip-text">
                 ENDLESS POSSIBILITIES.
               </span>
             </h1>
 
-            {/* Subtitle — BIGGER FONT (text-lg to text-2xl), EXTRA BOLD & CAPITALIZED */}
-            <p className="text-lg sm:text-xl md:text-2xl text-slate-800 dark:text-slate-100 max-w-2xl leading-relaxed font-black uppercase tracking-wide">
+            {/* Subtitle — Well Proportioned & Readable (text-sm to text-lg) */}
+            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-bold uppercase tracking-wide">
               POWERFUL EVERYDAY TOOLS FOR IMAGES, PDFS, CALCULATIONS, STUDENTS AND MORE. NO SIGNUP. NO LIMITS.
             </p>
 
@@ -49,22 +49,22 @@ export default function HomePage() {
               <SearchBar placeholder="SEARCH ANY TOOL YOU NEED (E.G. COMPRESS IMAGE, MERGE PDF, EMI)..." />
             </div>
 
-            {/* 4 Trust Chips — Larger Font & Extra Bold */}
-            <div className="pt-4 flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm font-black uppercase tracking-wider text-slate-900 dark:text-slate-100">
-              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Zap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            {/* 4 Trust Chips — Clean & Balanced */}
+            <div className="pt-4 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Zap className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
                 <span>BLAZING FAST</span>
               </div>
-              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Target className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 <span>100% FREE</span>
               </div>
-              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Lock className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Lock className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                 <span>NO SIGNUP</span>
               </div>
-              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <ShieldCheck className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <ShieldCheck className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
                 <span>PRIVACY FIRST</span>
               </div>
             </div>
