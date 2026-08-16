@@ -70,6 +70,12 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
 }
 
+/* Tall Condensed Hero Display Font matching reference image */
+.font-hero-display {
+  font-family: var(--font-bebas-neue), var(--font-oswald), Impact, sans-serif;
+  letter-spacing: 0.03em;
+}
+
 /* Floating Animation for Orbital Hero Cards */
 @keyframes orbital-float {
   0%, 100% {

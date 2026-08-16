@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ToolMetadata } from '@/types/tool';
 import { DropZone } from '../ui/DropZone';
 import { Button } from '../ui/Button';
 import { validatePdfFile, getPdfMetadata, mergePdfs } from '@/lib/pdf-engine';
 import { downloadBlob } from '@/lib/download';
 import { formatFileSize } from '@/lib/utils';
-import { FilePlus, Download, RotateCcw, CheckCircle2, AlertCircle, Loader2, Trash2, ArrowUp, ArrowDown, FileText } from 'lucide-react';
+import { FilePlus, Download, RotateCcw, CheckCircle2, AlertCircle, Loader2, Trash2, ArrowUp, ArrowDown } from 'lucide-react';
 
 interface PdfFileItem {
   file: File;
@@ -19,6 +19,7 @@ export function MergePdfWorkspace({ tool }: { tool: ToolMetadata }) {
   const [pdfItems, setPdfItems] = useState<PdfFileItem[]>([]);
   const [mergedBlob, setMergedBlob] = useState<Blob | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const addMoreInputRef = useRef<HTMLInputElement>(null);
 
   const handleFilesSelected = async (newFiles: File[]) => {
     if (newFiles.length === 0) return;
@@ -161,7 +162,7 @@ export function MergePdfWorkspace({ tool }: { tool: ToolMetadata }) {
                     type="button"
                     onClick={() => handleMoveFile(idx, 'up')}
                     disabled={idx === 0 || status === 'processing'}
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30"
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 cursor-pointer"
                     aria-label="Move file up"
                   >
                     <ArrowUp className="w-4 h-4" />
@@ -170,7 +171,7 @@ export function MergePdfWorkspace({ tool }: { tool: ToolMetadata }) {
                     type="button"
                     onClick={() => handleMoveFile(idx, 'down')}
                     disabled={idx === pdfItems.length - 1 || status === 'processing'}
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30"
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-30 cursor-pointer"
                     aria-label="Move file down"
                   >
                     <ArrowDown className="w-4 h-4" />
@@ -179,7 +180,7 @@ export function MergePdfWorkspace({ tool }: { tool: ToolMetadata }) {
                     type="button"
                     onClick={() => handleRemoveFile(idx)}
                     disabled={status === 'processing'}
-                    className="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/40"
+                    className="p-1.5 rounded-lg text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer"
                     aria-label="Remove file"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -189,33 +190,48 @@ export function MergePdfWorkspace({ tool }: { tool: ToolMetadata }) {
             ))}
           </div>
 
-          <div className="flex justify-between items-center pt-2">
-            <DropZone
-              acceptedTypes={['application/pdf']}
-              maxFileSizeMB={100}
-              onFilesSelected={handleFilesSelected}
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 pt-2">
+            <input
+              ref={addMoreInputRef}
+              type="file"
               multiple
+              accept="application/pdf"
+              className="hidden"
+              onChange={(e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  handleFilesSelected(Array.from(e.target.files));
+                }
+              }}
             />
-          </div>
-
-          <div className="flex justify-end space-x-3">
-            <Button variant="outline" onClick={handleReset} disabled={status === 'processing'}>
-              Cancel
-            </Button>
             <Button
-              variant="primary"
-              onClick={handleMerge}
-              disabled={pdfItems.length < 2 || status === 'processing'}
+              variant="outline"
+              size="sm"
+              onClick={() => addMoreInputRef.current?.click()}
+              disabled={status === 'processing'}
             >
-              {status === 'processing' ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Merging PDFs...
-                </>
-              ) : (
-                `Merge ${pdfItems.length} PDFs`
-              )}
+              <FilePlus className="w-4 h-4 mr-1.5" />
+              Add More PDFs
             </Button>
+
+            <div className="flex justify-end space-x-3 w-full sm:w-auto">
+              <Button variant="outline" onClick={handleReset} disabled={status === 'processing'}>
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleMerge}
+                disabled={pdfItems.length < 2 || status === 'processing'}
+              >
+                {status === 'processing' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Merging PDFs...
+                  </>
+                ) : (
+                  `Merge ${pdfItems.length} PDFs`
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       )}
