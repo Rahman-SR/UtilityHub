@@ -105,22 +105,22 @@ export default async function ToolPage({ params }: ToolPageProps) {
       {/* Header */}
       <div className="max-w-3xl space-y-4">
         <div className="flex items-center space-x-2">
-          <span className="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 text-xs font-bold uppercase tracking-wider">
+          <span className="px-3 py-1 rounded-full bg-blue-100 dark:bg-indigo-950 text-blue-800 dark:text-indigo-300 text-xs font-black uppercase tracking-wider">
             {category ? category.name : tool.category}
           </span>
           {tool.localProcessing && (
-            <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-semibold">
+            <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Browser Local Processing</span>
             </span>
           )}
         </div>
 
-        <h1 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-slate-900 dark:text-slate-100 tracking-tight">
+        <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-slate-900 dark:text-slate-100 tracking-tight">
           {tool.name}
         </h1>
 
-        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
+        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
           {tool.longDescription || tool.description}
         </p>
       </div>
@@ -133,18 +133,18 @@ export default async function ToolPage({ params }: ToolPageProps) {
 
       {/* How To Use Steps */}
       {tool.howToSteps && tool.howToSteps.length > 0 && (
-        <section className="max-w-4xl mx-auto my-12 p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
-          <h2 className="font-heading font-bold text-2xl text-slate-900 dark:text-slate-100">
+        <section className="max-w-4xl mx-auto my-12 p-8 rounded-3xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs space-y-6">
+          <h2 className="font-heading font-black text-2xl text-slate-900 dark:text-slate-100">
             How to use {tool.name}
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {tool.howToSteps.map((step, idx) => (
               <div key={idx} className="space-y-2 relative">
-                <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">
+                <div className="w-8 h-8 rounded-full bg-blue-600 dark:bg-indigo-600 text-white font-bold flex items-center justify-center text-sm">
                   {idx + 1}
                 </div>
-                <h3 className="font-heading font-bold text-base text-slate-900 dark:text-slate-100">
+                <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
                   {step.title}
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">

@@ -4,60 +4,75 @@ import { POPULAR_TOOLS } from '@/data/tools';
 import { ToolCard } from '@/components/cards/ToolCard';
 import { CategoryCard } from '@/components/cards/CategoryCard';
 import { SearchBar } from '@/components/search/SearchBar';
+import { HeroOrbitalVisual } from '@/components/home/HeroOrbitalVisual';
 import { AdPlaceholder } from '@/components/ads/AdPlaceholder';
 import { constructMetadata } from '@/lib/seo';
-import { ShieldCheck, Zap, Lock, Sparkles, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Zap, Lock, Sparkles, ArrowRight, Flame, Target } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = constructMetadata({
   title: 'Daily Utility Hub — 100% Free Browser-Based Utility Tools',
   description:
-    'Free online tools to compress images, merge PDFs, split PDFs, generate QR codes, calculate GST & EMI. 100% local browser processing — your files never leave your device.',
+    'Powerful everyday tools for images, PDFs, calculations, students and more. No signup. No limits. 100% local browser processing.',
   canonicalUrl: 'https://dailyutilityhub.com',
 });
 
 export default function HomePage() {
   return (
-    <div className="space-y-16 sm:space-y-24">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 sm:pt-20 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-indigo-50/70 via-slate-50 to-slate-50/40 dark:from-slate-950 dark:via-indigo-950/40 dark:to-slate-950 border-b border-slate-200/80 dark:border-slate-800">
-        <div className="max-w-5xl mx-auto text-center space-y-8 relative z-10">
-          {/* Badge */}
-          <div className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-indigo-100/90 dark:bg-indigo-950 text-indigo-900 dark:text-indigo-300 text-xs sm:text-sm font-black tracking-widest uppercase border border-indigo-300 dark:border-indigo-800 shadow-xs">
-            <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-            <span>100% FREE • NO SIGN UP • ZERO FILE UPLOADS</span>
+    <div className="space-y-16 sm:space-y-20 pb-16">
+      {/* 2-Column Hero Section matching Design 1 & 2 */}
+      <section className="relative overflow-hidden pt-8 sm:pt-14 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/60 via-slate-50 to-slate-50/20 dark:from-[#0B101D] dark:via-[#121829] dark:to-[#0B101D] border-b border-slate-200/80 dark:border-slate-800">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+          {/* Left Column Text Content */}
+          <div className="lg:col-span-7 space-y-6 text-left">
+            {/* Pill Badge */}
+            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-blue-100/80 dark:bg-indigo-950/80 text-blue-800 dark:text-indigo-300 text-xs font-black tracking-wide border border-blue-200 dark:border-indigo-800 shadow-xs">
+              <Sparkles className="w-4 h-4 text-blue-600 dark:text-indigo-400" />
+              <span>⚡ 15+ Tools • 100% Free • Private</span>
+            </div>
+
+            {/* Headline matching References */}
+            <h1 className="font-heading font-black text-4xl sm:text-5xl md:text-6xl text-slate-900 dark:text-slate-100 tracking-tight leading-[1.08]">
+              One Toolbox. <br />
+              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400 text-transparent bg-clip-text">
+                Endless Possibilities.
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-medium">
+              Powerful everyday tools for images, PDFs, calculations, students and more. No signup. No limits.
+            </p>
+
+            {/* Prominent Search Bar with Integrated Search Button */}
+            <div className="pt-2">
+              <SearchBar />
+            </div>
+
+            {/* 4 Trust Chips matching Reference */}
+            <div className="pt-4 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-extrabold text-slate-700 dark:text-slate-300">
+              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Zap className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                <span>Blazing Fast</span>
+              </div>
+              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Target className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <span>100% Free</span>
+              </div>
+              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Lock className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                <span>No Signup</span>
+              </div>
+              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <ShieldCheck className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+                <span>Privacy First</span>
+              </div>
+            </div>
           </div>
 
-          {/* Bold & Capitalized Large Main Heading */}
-          <h1 className="font-heading font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-slate-900 dark:text-slate-100 tracking-tight leading-[1.05] uppercase">
-            EVERYTHING YOU NEED. <br className="hidden sm:inline" />
-            <span className="text-indigo-600 dark:text-indigo-400">ONE TOOLBOX.</span>
-          </h1>
-
-          {/* Subtitle Bold & Capitalized */}
-          <p className="text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-200 max-w-3xl mx-auto leading-relaxed font-bold uppercase tracking-wider">
-            ESSENTIAL UTILITIES TO COMPRESS IMAGES, MERGE PDFS, GENERATE QR CODES, AND CALCULATE FINANCES DIRECTLY IN YOUR BROWSER. FAST, SECURE, AND ALWAYS PRIVATE.
-          </p>
-
-          {/* Prominent Product Search Control */}
-          <div className="pt-2">
-            <SearchBar placeholder="SEARCH 15+ BROWSER TOOLS (E.G. COMPRESS IMAGE, MERGE PDF, EMI)..." />
-          </div>
-
-          {/* Trust Indicators Bar */}
-          <div className="pt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-slate-800 dark:text-slate-200">
-            <div className="flex items-center space-x-2">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-              <span>100% BROWSER LOCAL</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Zap className="w-5 h-5 text-amber-500" />
-              <span>INSTANT FILE PROCESSING</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Lock className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-              <span>NO REGISTRATION REQUIRED</span>
-            </div>
+          {/* Right Column Pure HTML/CSS/React Orbital Visual */}
+          <div className="lg:col-span-5 flex justify-center">
+            <HeroOrbitalVisual />
           </div>
         </div>
       </section>
@@ -67,90 +82,88 @@ export default function HomePage() {
         <AdPlaceholder />
       </div>
 
-      {/* Category Section (White Surface Grid) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div>
-            <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-slate-100">
-              Browse Tool Categories
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
-              Organized for quick access to your daily tasks
-            </p>
-          </div>
+      {/* Top Categories Section (5-Column Desktop Grid) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="font-heading font-black text-xl sm:text-2xl text-slate-900 dark:text-slate-100">
+            Top Categories
+          </h2>
+          <Link
+            href="/tools"
+            className="inline-flex items-center space-x-1 text-xs sm:text-sm font-extrabold text-blue-600 dark:text-indigo-400 hover:underline"
+          >
+            <span>Explore all</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {CATEGORY_LIST.map((cat) => (
             <CategoryCard key={cat.id} category={cat} />
           ))}
         </div>
       </section>
 
-      {/* Popular Tools Section (Soft Secondary Background) */}
-      <section className="py-16 bg-slate-100/70 dark:bg-slate-900/60 border-y border-slate-200/80 dark:border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs font-extrabold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
-                Most Used Utilities
-              </span>
-              <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-slate-900 dark:text-slate-100 mt-1">
-                Popular Tools
-              </h2>
-            </div>
-            <Link
-              href="/tools"
-              className="inline-flex items-center space-x-1 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700"
-            >
-              <span>View All 15 Tools</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+      {/* Popular Tools Section (Compact Horizontal Grid) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Flame className="w-5 h-5 text-orange-500" />
+            <h2 className="font-heading font-black text-xl sm:text-2xl text-slate-900 dark:text-slate-100">
+              Popular Tools
+            </h2>
           </div>
+          <Link
+            href="/tools"
+            className="inline-flex items-center space-x-1 text-xs sm:text-sm font-extrabold text-blue-600 dark:text-indigo-400 hover:underline"
+          >
+            <span>View all tools</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {POPULAR_TOOLS.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {POPULAR_TOOLS.map((tool) => (
+            <ToolCard key={tool.id} tool={tool} />
+          ))}
         </div>
       </section>
 
-      {/* Trust & Privacy Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs grid grid-cols-1 md:grid-cols-3 gap-8 text-center sm:text-left">
-          <div className="space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800 flex items-center justify-center mx-auto sm:mx-0">
-              <ShieldCheck className="w-6 h-6" />
+      {/* Why Choose Our Tools (Benefits Section) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="space-y-2.5">
+            <div className="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800 flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5" />
             </div>
-            <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-slate-100">
-              Privacy First Engine
+            <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
+              100% Local Privacy Engine
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Your files never leave your device. All image compression, PDF merging, and QR generation are computed 100% locally in your browser memory.
             </p>
           </div>
 
-          <div className="space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200/80 dark:border-amber-800 flex items-center justify-center mx-auto sm:mx-0">
-              <Zap className="w-6 h-6" />
+          <div className="space-y-2.5">
+            <div className="w-11 h-11 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200/80 dark:border-amber-800 flex items-center justify-center">
+              <Zap className="w-5 h-5" />
             </div>
-            <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-slate-100">
+            <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
               Blazing Fast Speed
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               No server queues or upload bandwidth limits. Experience near-instant processing powered directly by HTML5 Canvas & WebAssembly APIs.
             </p>
           </div>
 
-          <div className="space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/80 dark:border-indigo-800 flex items-center justify-center mx-auto sm:mx-0">
-              <Lock className="w-6 h-6" />
+          <div className="space-y-2.5">
+            <div className="w-11 h-11 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200/80 dark:border-blue-800 flex items-center justify-center">
+              <Lock className="w-5 h-5" />
             </div>
-            <h3 className="font-heading font-bold text-lg text-slate-900 dark:text-slate-100">
+            <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
               Free & Unrestricted
             </h3>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               No subscription fees, no account registration required, and no hidden trial limits. Designed for daily seamless productivity.
             </p>
           </div>

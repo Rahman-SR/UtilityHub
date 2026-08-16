@@ -4,67 +4,51 @@
 
 @layer base {
   :root {
-    --background: 220 33% 98%; /* #F7F9FC */
-    --foreground: 222 47% 11%; /* #0F172A */
-    --card: 0 0% 100%; /* #FFFFFF */
-    --card-foreground: 222 47% 11%; /* #0F172A */
-    --popover: 0 0% 100%; /* #FFFFFF */
-    --popover-foreground: 222 47% 11%; /* #0F172A */
-    --primary: 243 75% 59%; /* #4F46E5 */
-    --primary-hover: 244 76% 51%; /* #4338CA */
-    --primary-soft: 235 100% 97%; /* #EEF2FF */
-    --secondary: 210 40% 96.1%; /* #F1F5F9 */
-    --secondary-foreground: 222 47% 11%; /* #0F172A */
-    --muted: 215 25% 35%; /* #475569 */
+    --background: 210 40% 98%; /* #F8FAFC */
+    --foreground: 220 48% 8%; /* #0B1220 */
+    --surface: 0 0% 100%; /* #FFFFFF */
+    --surface-elevated: 210 40% 96.1%; /* #F1F5F9 */
+    --muted: 218 13% 41%; /* #5B6475 */
     --muted-foreground: 215 16% 47%; /* #64748B */
-    --accent: 210 40% 96.1%; /* #F1F5F9 */
-    --accent-foreground: 222 47% 11%; /* #0F172A */
-    --destructive: 0 84.2% 60.2%; /* #DC2626 */
-    --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%; /* #E2E8F0 */
-    --input: 214 32% 91%; /* #E2E8F0 */
-    --ring: 243 75% 59%; /* #4F46E5 */
+    --border: 218 27% 92%; /* #E4E9F2 */
+    --input: 218 27% 92%; /* #E4E9F2 */
+    --primary: 221 83% 53%; /* #2563EB */
+    --primary-hover: 224 76% 48%; /* #1D4ED8 */
+    --primary-soft: 214 100% 97%; /* #EFF6FF */
+    --ring: 221 83% 53%;
     --radius: 0.875rem;
 
-    /* Category Specific Accents */
-    --cat-image: 199 89% 48%; /* #0284C7 */
-    --cat-image-soft: 204 94% 94%; /* #E0F2FE */
-    --cat-pdf: 343 81% 50%; /* #E11D48 */
-    --cat-pdf-soft: 350 89% 96%; /* #FFE4E6 */
+    /* Category Accents */
+    --cat-image: 217 91% 60%; /* #3B82F6 */
+    --cat-image-soft: 214 100% 97%;
+    --cat-pdf: 348 83% 60%; /* #F43F5E */
+    --cat-pdf-soft: 350 89% 96%;
     --cat-finance: 160 84% 39%; /* #059669 */
-    --cat-finance-soft: 152 81% 96%; /* #D1FAE5 */
+    --cat-finance-soft: 152 81% 96%;
     --cat-student: 263 70% 58%; /* #7C3AED */
-    --cat-student-soft: 250 92% 95%; /* #EDE9FE */
+    --cat-student-soft: 250 92% 95%;
     --cat-quick: 38 92% 50%; /* #D97706 */
-    --cat-quick-soft: 48 100% 96%; /* #FEF3C7 */
+    --cat-quick-soft: 48 100% 96%;
   }
 
   .dark {
-    --background: 224 71% 4%; /* #020617 */
+    --background: 222 47% 7%; /* #0B101D */
     --foreground: 210 40% 98%; /* #F8FAFC */
-    --card: 222 47% 11%; /* #0F172A */
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 239 84% 67%; /* #6366F1 */
-    --primary-hover: 243 75% 59%; /* #4F46E5 */
-    --primary-soft: 235 50% 15%;
-    --secondary: 217 33% 17%; /* #1E293B */
-    --secondary-foreground: 210 40% 98%;
+    --surface: 223 39% 11%; /* #121829 */
+    --surface-elevated: 223 35% 16%; /* #1A2238 */
     --muted: 215 20% 65%;
     --muted-foreground: 215 16% 57%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
     --border: 217 33% 17%; /* #1E293B */
     --input: 217 33% 17%;
+    --primary: 239 84% 67%; /* #6366F1 */
+    --primary-hover: 243 75% 59%;
+    --primary-soft: 235 50% 15%;
     --ring: 239 84% 67%;
 
-    /* Dark Mode Category Accents */
-    --cat-image: 199 89% 60%;
-    --cat-image-soft: 204 50% 15%;
-    --cat-pdf: 343 81% 65%;
+    /* Dark Category Accents */
+    --cat-image: 217 91% 65%;
+    --cat-image-soft: 215 50% 15%;
+    --cat-pdf: 348 83% 65%;
     --cat-pdf-soft: 350 50% 15%;
     --cat-finance: 160 84% 50%;
     --cat-finance-soft: 152 50% 15%;
@@ -86,7 +70,40 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
 }
 
-/* 10/10 Production-Grade Button Micro-Interactions */
+/* Floating Animation for Orbital Hero Cards */
+@keyframes orbital-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes orbital-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+}
+
+.animate-orbital-float {
+  animation: orbital-float 6s ease-in-out infinite;
+}
+
+.animate-orbital-float-delayed {
+  animation: orbital-float 7s ease-in-out 1.5s infinite;
+}
+
+.animate-orbital-pulse {
+  animation: orbital-pulse 4s ease-in-out infinite;
+}
+
+/* 10/10 Button Micro-Interactions */
 button, .btn-interactive {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }

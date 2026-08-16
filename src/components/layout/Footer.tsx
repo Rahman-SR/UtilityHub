@@ -1,19 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { BRAND_CONFIG } from '@/config/brand';
-import { ShieldCheck, Wrench } from 'lucide-react';
+import { ShieldCheck, Zap } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-slate-950 text-slate-400 border-t border-slate-900 pt-16 pb-12">
+    <footer className="bg-[#0B101D] text-slate-400 border-t border-slate-800/80 pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Brand Info */}
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg">
-                <Wrench className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-gradient-to-br dark:from-blue-600 dark:to-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">
+                <Zap className="w-5 h-5 fill-current" />
               </div>
               <span className="font-heading font-extrabold text-xl text-white tracking-tight">
                 {BRAND_CONFIG.name}
@@ -24,7 +24,7 @@ export function Footer() {
               Free, fast, and privacy-first online tools. Compress images, merge PDFs, generate QR codes, and calculate finances 100% locally inside your browser.
             </p>
 
-            <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-semibold text-emerald-400">
+            <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-[#121829] border border-slate-800 text-xs font-semibold text-emerald-400">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span>Zero server uploads. Your data is private.</span>
             </div>
@@ -128,7 +128,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
           <p>© {new Date().getFullYear()} {BRAND_CONFIG.name}. All rights reserved.</p>
 
           <p className="flex items-center space-x-1">
