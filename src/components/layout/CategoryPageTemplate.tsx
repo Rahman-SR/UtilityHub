@@ -4,6 +4,8 @@ import { getToolsByCategory } from '@/data/tools';
 import { ToolCard } from '@/components/cards/ToolCard';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { AdPlaceholder } from '@/components/ads/AdPlaceholder';
+import { generateCategoryJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
 
 export function CategoryPageTemplate({ categoryId }: { categoryId: string }) {
   const category = CATEGORIES[categoryId];
@@ -11,8 +13,12 @@ export function CategoryPageTemplate({ categoryId }: { categoryId: string }) {
 
   if (!category) return null;
 
+  const jsonLd = generateCategoryJsonLd(category.name, category.slug);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+      <JsonLd data={jsonLd} />
+
       <Breadcrumbs items={[{ label: category.name }]} />
 
       {/* Clean Category Header Banner */}
@@ -47,6 +53,16 @@ export function CategoryPageTemplate({ categoryId }: { categoryId: string }) {
             No tools found in this category yet.
           </div>
         )}
+      </section>
+
+      {/* Category Bottom SEO Description */}
+      <section className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 space-y-3">
+        <h3 className="font-heading font-black text-lg text-slate-900 dark:text-slate-100">
+          About {category.name}
+        </h3>
+        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+          Explore our complete collection of free online {category.name.toLowerCase()}. All tools run 100% locally in your web browser with zero server uploads, ensuring maximum privacy and blazing-fast processing speed.
+        </p>
       </section>
 
       {/* Ad Slot placed below tools */}

@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { BRAND_CONFIG } from '@/config/brand';
 import { ToolMetadata } from '@/types/tool';
+import { CATEGORIES } from '@/data/categories';
 
 export function constructMetadata({
   title,
@@ -29,6 +30,7 @@ export function constructMetadata({
       'merge pdf',
       'gst calculator',
       'emi calculator',
+      'resume builder',
       'qr generator',
       'free web tools',
       'browser tools',
@@ -74,20 +76,111 @@ export function constructMetadata({
   };
 }
 
-export function generateToolJsonLd(tool: ToolMetadata) {
+/**
+ * Generate homepage WebSite JSON-LD
+ */
+export function generateHomePageJsonLd() {
   return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: BRAND_CONFIG.name,
+    url: BRAND_CONFIG.domain,
+    description: BRAND_CONFIG.description,
+    publisher: {
+      '@type': 'Organization',
+      name: BRAND_CONFIG.name,
+      url: BRAND_CONFIG.domain,
+    },
+  };
+}
+
+/**
+ * Generate Tool Page JSON-LD (WebApplication + BreadcrumbList + FAQPage)
+ */
+export function generateToolJsonLd(tool: ToolMetadata) {
+  const category = CATEGORIES[tool.category];
+  const toolUrl = `${BRAND_CONFIG.domain}/tools/${tool.slug}`;
+  const categoryUrl = category ? `${BRAND_CONFIG.domain}/${category.slug}` : `${BRAND_CONFIG.domain}/tools`;
+
+  const webAppSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
     name: tool.name,
     description: tool.description,
-    url: `${BRAND_CONFIG.domain}/tools/${tool.slug}`,
+    url: toolUrl,
     applicationCategory: 'UtilityApplication',
-    operatingSystem: 'Any',
+    operatingSystem: 'All',
     browserRequirements: 'Requires JavaScript. Requires HTML5.',
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
     },
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: BRAND_CONFIG.domain,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: category ? category.name : 'Tools',
+        item: categoryUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: tool.name,
+        item: toolUrl,
+      },
+    ],
+  };
+
+  const faqSchema = tool.faqs && tool.faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: tool.faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  } : null;
+
+  return [webAppSchema, breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])];
+}
+
+/**
+ * Generate Category Page JSON-LD (BreadcrumbList)
+ */
+export function generateCategoryJsonLd(categoryName: string, categorySlug: string) {
+  const categoryUrl = `${BRAND_CONFIG.domain}/${categorySlug}`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: BRAND_CONFIG.domain,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: categoryName,
+        item: categoryUrl,
+      },
+    ],
   };
 }

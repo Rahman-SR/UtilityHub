@@ -41,12 +41,10 @@ import {
   ChevronUp,
 } from 'lucide-react';
 
-export function ResumeBuilderWorkspace({ tool }: { tool: ToolMetadata }) {
-  const [data, setData] = useState<ResumeData>(INITIAL_RESUME_DATA);
+export function ResumeBuilderWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
+  const [data, setData] = useState<ResumeData>(() => loadResumeDraft());
   const [mobileTab, setMobileTab] = useState<'edit' | 'preview'>('edit');
-  const [activeSectionId, setActiveSectionId] = useState<string>('personal');
   const [showResetConfirm, setShowResetConfirm] = useState<boolean>(false);
-  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   // Accordion toggle states for editor sections
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -63,18 +61,9 @@ export function ResumeBuilderWorkspace({ tool }: { tool: ToolMetadata }) {
 
   const previewRef = useRef<HTMLDivElement>(null);
 
-  // Load local draft on mount
-  useEffect(() => {
-    const draft = loadResumeDraft();
-    setData(draft);
-  }, []);
-
   // Autosave draft on data change
   useEffect(() => {
-    setIsSaving(true);
     saveResumeDraft(data);
-    const timer = setTimeout(() => setIsSaving(false), 400);
-    return () => clearTimeout(timer);
   }, [data]);
 
   const toggleAccordion = (id: string) => {
@@ -215,7 +204,7 @@ export function ResumeBuilderWorkspace({ tool }: { tool: ToolMetadata }) {
           <div className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
             <div className="flex items-center space-x-2 text-xs font-bold text-emerald-700 dark:text-emerald-400">
               <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" strokeWidth={2} />
-              <span>{isSaving ? 'Saving draft...' : 'Saved locally in browser'}</span>
+              <span>Saved locally in browser</span>
             </div>
 
             <Button
@@ -454,7 +443,7 @@ export function ResumeBuilderWorkspace({ tool }: { tool: ToolMetadata }) {
                                   ? {
                                       ...s,
                                       data: {
-                                        skills: s.data.skills.filter((_: any, i: number) => i !== sIdx),
+                                        skills: (s.data as { skills: string[] }).skills.filter((_: string, i: number) => i !== sIdx),
                                       },
                                     }
                                   : s

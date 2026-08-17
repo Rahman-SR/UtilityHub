@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ToolMetadata } from '@/types/tool';
-import { Calendar, Cake, PartyPopper } from 'lucide-react';
+import { Cake, PartyPopper } from 'lucide-react';
 import { calculateAge } from '@/lib/calculators/age';
 import { formatNumber } from '@/lib/calculators/formatters';
 import { CalculatorShell } from '../calculators/CalculatorShell';

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { BRAND_CONFIG } from '@/config/brand';
-import { ShieldCheck, Zap, ArrowUpRight } from 'lucide-react';
+import { ShieldCheck, Zap } from 'lucide-react';
 
 export function Footer() {
   return (

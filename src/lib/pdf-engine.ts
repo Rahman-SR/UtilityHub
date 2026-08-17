@@ -45,7 +45,7 @@ export async function getPdfMetadata(file: File): Promise<{ pageCount: number; f
       pageCount: pdfDoc.getPageCount(),
       fileSize: file.size,
     };
-  } catch (err: any) {
+  } catch {
     throw new Error(`Could not read PDF metadata for "${file.name}". File may be password protected or corrupted.`);
   }
 }
@@ -127,7 +127,7 @@ export async function mergePdfs(files: File[]): Promise<Blob> {
       const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
       const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
       copiedPages.forEach((page) => mergedPdf.addPage(page));
-    } catch (err: any) {
+    } catch {
       throw new Error(`Failed to process "${file.name}". File may be password protected or unreadable.`);
     }
   }
@@ -143,10 +143,11 @@ export async function splitPdf(file: File, pageRangeStr: string): Promise<{ blob
 
   const PDFDocument = await getPdfLib();
   const arrayBuffer = await file.arrayBuffer();
-  let srcDoc: any;
+  
+  let srcDoc;
   try {
     srcDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
-  } catch (err: any) {
+  } catch {
     throw new Error(`Could not load PDF "${file.name}". File may be encrypted or corrupted.`);
   }
 
@@ -155,7 +156,7 @@ export async function splitPdf(file: File, pageRangeStr: string): Promise<{ blob
 
   const splitDoc = await PDFDocument.create();
   const copiedPages = await splitDoc.copyPages(srcDoc, pageIndices);
-  copiedPages.forEach((page: any) => splitDoc.addPage(page));
+  copiedPages.forEach((page) => splitDoc.addPage(page));
 
   const pdfBytes = await splitDoc.save();
   return {

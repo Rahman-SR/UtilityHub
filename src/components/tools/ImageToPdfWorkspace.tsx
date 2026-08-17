@@ -74,8 +74,8 @@ export function ImageToPdfWorkspace({ tool }: { tool: ToolMetadata }) {
       const blob = await imagesToPdf(inputItems, { pageSize, orientation, marginMm });
       setPdfBlob(blob);
       setStatus('success');
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to generate PDF document.');
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'Failed to generate PDF document.');
       setStatus('error');
     }
   };

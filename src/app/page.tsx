@@ -5,20 +5,25 @@ import { ToolCard } from '@/components/cards/ToolCard';
 import { CategoryCard } from '@/components/cards/CategoryCard';
 import { HeroOrbitalVisual } from '@/components/home/HeroOrbitalVisual';
 import { AdPlaceholder } from '@/components/ads/AdPlaceholder';
-import { constructMetadata } from '@/lib/seo';
+import { constructMetadata, generateHomePageJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { ShieldCheck, Zap, Lock, Sparkles, ArrowRight, Flame, Target } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = constructMetadata({
   title: 'Daily Utility Hub — 100% Free Browser-Based Utility Tools',
   description:
-    'POWERFUL EVERYDAY TOOLS FOR IMAGES, PDFS, CALCULATIONS, STUDENTS AND MORE. NO SIGNUP. NO LIMITS. 100% LOCAL BROWSER PROCESSING.',
+    'Powerful everyday tools for images, PDFs, financial calculations, students, and QR code generation. 100% free with local browser processing and zero server uploads.',
   canonicalUrl: 'https://dailyutilityhub.com',
 });
 
 export default function HomePage() {
+  const jsonLd = generateHomePageJsonLd();
+
   return (
     <div className="space-y-12 sm:space-y-16 pb-16">
+      <JsonLd data={jsonLd} />
+
       {/* 2-Column Hero Section matching Design 1 & 2 */}
       <section className="relative overflow-hidden pt-8 sm:pt-14 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/60 via-slate-50 to-slate-50/20 dark:from-[#0B101D] dark:via-[#121829] dark:to-[#0B101D] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
@@ -27,7 +32,7 @@ export default function HomePage() {
             {/* Pill Badge */}
             <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-indigo-950/80 text-blue-900 dark:text-indigo-200 text-xs sm:text-sm font-black tracking-wider uppercase border border-blue-200 dark:border-indigo-800 shadow-xs">
               <Sparkles className="w-4 h-4 text-blue-600 dark:text-indigo-400" strokeWidth={1.75} />
-              <span>15+ TOOLS • 100% FREE • PRIVATE</span>
+              <span>17+ TOOLS • 100% FREE • PRIVATE</span>
             </div>
 
             {/* Headline */}

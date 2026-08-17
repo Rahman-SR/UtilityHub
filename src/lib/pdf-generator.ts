@@ -1,4 +1,5 @@
 import { loadImage } from './image-processing';
+import type { jsPDF } from 'jspdf';
 
 export interface PdfOptions {
   pageSize?: 'a4' | 'letter' | 'fit';
@@ -23,10 +24,10 @@ export async function imagesToPdf(
     item instanceof File ? { file: item, rotation: 0 } : item
   );
 
-  const { jsPDF } = await import('jspdf');
+  const { jsPDF: JsPdfClass } = await import('jspdf');
   const { pageSize = 'a4', orientation = 'portrait', marginMm = 10 } = options;
 
-  let doc: any = null;
+  let doc: jsPDF | null = null;
 
   for (let i = 0; i < normalizedItems.length; i++) {
     const { file, rotation = 0 } = normalizedItems[i];
@@ -64,14 +65,14 @@ export async function imagesToPdf(
 
     if (i === 0) {
       if (pageSize === 'fit') {
-        doc = new jsPDF({
+        doc = new JsPdfClass({
           orientation: targetWidth > targetHeight ? 'landscape' : 'portrait',
           unit: 'px',
           format: [targetWidth, targetHeight],
         });
         doc.addImage(imgDataUrl, 'JPEG', 0, 0, targetWidth, targetHeight);
       } else {
-        doc = new jsPDF({
+        doc = new JsPdfClass({
           orientation,
           unit: 'mm',
           format: pageSize,

@@ -17,16 +17,28 @@ export function QrGeneratorWorkspace({ tool }: { tool: ToolMetadata }) {
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
+    let isCancelled = false;
+
     if (!text || text.trim().length === 0) {
-      setQrDataUrl('');
-      setError('Please enter a URL or text to generate a QR code.');
       return;
     }
 
-    setError('');
     generateQrDataUrl(text, { width: qrSize, errorCorrectionLevel: ecLevel })
-      .then((url) => setQrDataUrl(url))
-      .catch((err) => setError(err.message || 'QR Code generation failed.'));
+      .then((url) => {
+        if (!isCancelled) {
+          setQrDataUrl(url);
+          setError('');
+        }
+      })
+      .catch((err) => {
+        if (!isCancelled) {
+          setError(err instanceof Error ? err.message : 'QR Code generation failed.');
+        }
+      });
+
+    return () => {
+      isCancelled = true;
+    };
   }, [text, qrSize, ecLevel]);
 
   const handleCopyText = () => {
@@ -107,7 +119,7 @@ export function QrGeneratorWorkspace({ tool }: { tool: ToolMetadata }) {
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Error Correction</label>
                 <select
                   value={ecLevel}
-                  onChange={(e) => setEcLevel(e.target.value as any)}
+                  onChange={(e) => setEcLevel(e.target.value as 'L' | 'M' | 'Q' | 'H')}
                   className="w-full px-3 py-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-xs font-medium"
                 >
                   <option value="L">Low (7%)</option>
@@ -131,6 +143,7 @@ export function QrGeneratorWorkspace({ tool }: { tool: ToolMetadata }) {
         <div className="flex flex-col items-center justify-center p-8 bg-slate-50 dark:bg-slate-800/40 rounded-3xl border border-slate-200 dark:border-slate-700 space-y-4">
           <div className="p-4 bg-white rounded-2xl shadow-lg border border-slate-200 flex items-center justify-center min-h-[220px] min-w-[220px]">
             {qrDataUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img src={qrDataUrl} alt="Generated QR Code" className="w-48 h-48 object-contain" />
             ) : (
               <div className="text-center p-4 text-slate-400">

@@ -11,7 +11,7 @@ import { useSortableFiles } from '@/hooks/useSortableFiles';
 import { FileWorkspaceGrid } from '../file-workspace/FileWorkspaceGrid';
 import { Files, Download, RotateCcw, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
-export function MergePdfWorkspace({ tool }: { tool: ToolMetadata }) {
+export function MergePdfWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
   const [status, setStatus] = useState<'initial' | 'files_selected' | 'processing' | 'success' | 'error'>('initial');
   const [mergedBlob, setMergedBlob] = useState<Blob | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -65,8 +65,8 @@ export function MergePdfWorkspace({ tool }: { tool: ToolMetadata }) {
       const blob = await mergePdfs(reorderedFiles);
       setMergedBlob(blob);
       setStatus('success');
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to merge PDF files.');
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'Failed to merge PDF files.');
       setStatus('error');
     }
   };

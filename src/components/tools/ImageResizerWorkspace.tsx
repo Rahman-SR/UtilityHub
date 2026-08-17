@@ -48,7 +48,7 @@ export function ImageResizerWorkspace({ tool }: { tool: ToolMetadata }) {
       setAspectRatio(dimensions.width / dimensions.height);
       setFile(selectedFile);
       setStatus('file_selected');
-    } catch (err: any) {
+    } catch {
       setErrorMessage('Could not read image dimensions. File may be corrupted.');
       setStatus('error');
     }
@@ -110,8 +110,8 @@ export function ImageResizerWorkspace({ tool }: { tool: ToolMetadata }) {
       setPreviewUrl(url);
 
       setStatus('success');
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Image resizing failed.');
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'Image resizing failed.');
       setStatus('error');
     }
   };

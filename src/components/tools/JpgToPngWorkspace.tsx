@@ -53,8 +53,8 @@ export function JpgToPngWorkspace({ tool }: { tool: ToolMetadata }) {
       setPreviewUrl(url);
 
       setStatus('success');
-    } catch (err: any) {
-      setErrorMessage(err.message || 'JPG to PNG conversion failed.');
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'JPG to PNG conversion failed.');
       setStatus('error');
     }
   };

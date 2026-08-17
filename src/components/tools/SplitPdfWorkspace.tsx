@@ -11,7 +11,7 @@ import { formatFileSize } from '@/lib/utils';
 import { SingleFilePreviewCard } from '../file-workspace/SingleFilePreviewCard';
 import { Scissors, Download, RotateCcw, CheckCircle2, AlertCircle, Loader2, Info } from 'lucide-react';
 
-export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
+export function SplitPdfWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
   const [status, setStatus] = useState<'initial' | 'file_selected' | 'processing' | 'success' | 'error'>('initial');
   const [file, setFile] = useState<File | null>(null);
   const [pageCount, setPageCount] = useState<number>(0);
@@ -40,8 +40,8 @@ export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
       setPageRangeStr(defaultRange);
       handleRangeChange(defaultRange, meta.pageCount);
       setStatus('file_selected');
-    } catch (err: any) {
-      setErrorMessage(err.message || `Could not read "${selectedFile.name}".`);
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : `Could not read "${selectedFile.name}".`);
       setStatus('error');
     }
   };
@@ -58,8 +58,8 @@ export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
       const indices = parsePageRange(val, total);
       setParsedCount(indices.length);
       setRangeError('');
-    } catch (err: any) {
-      setRangeError(err.message || 'Invalid page range syntax.');
+    } catch (err: unknown) {
+      setRangeError(err instanceof Error ? err.message : 'Invalid page range syntax.');
       setParsedCount(0);
     }
   };
@@ -80,8 +80,8 @@ export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
       const result = await splitPdf(file, pageRangeStr);
       setSplitBlob(result.blob);
       setStatus('success');
-    } catch (err: any) {
-      setErrorMessage(err.message || 'PDF page extraction failed.');
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'PDF page extraction failed.');
       setStatus('error');
     }
   };

@@ -18,27 +18,23 @@ export function SingleFilePreviewCard({
   className = '',
   onRotationChange,
 }: SingleFilePreviewCardProps) {
-  const [objectUrl, setObjectUrl] = useState<string>('');
+  const [objectUrl] = useState<string>(() => (file ? URL.createObjectURL(file) : ''));
   const [dimensions, setDimensions] = useState<{ width: number; height: number } | null>(null);
   const [rotation, setRotation] = useState<number>(0);
 
   useEffect(() => {
-    if (!file) return;
-
-    const url = URL.createObjectURL(file);
-    setObjectUrl(url);
-    setRotation(0);
+    if (!objectUrl) return;
 
     const img = new Image();
     img.onload = () => {
       setDimensions({ width: img.naturalWidth, height: img.naturalHeight });
     };
-    img.src = url;
+    img.src = objectUrl;
 
     return () => {
-      URL.revokeObjectURL(url);
+      URL.revokeObjectURL(objectUrl);
     };
-  }, [file]);
+  }, [objectUrl]);
 
   const handleRotate = (direction: 'cw' | 'ccw') => {
     const newRotation =
@@ -57,6 +53,7 @@ export function SingleFilePreviewCard({
       <div className="relative w-full h-48 sm:h-56 bg-slate-100/70 dark:bg-slate-900/80 rounded-xl flex items-center justify-center p-3 overflow-hidden">
         {objectUrl ? (
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={objectUrl}
               alt={file.name}

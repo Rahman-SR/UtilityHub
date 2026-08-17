@@ -52,8 +52,8 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
       setPreviewUrl(url);
 
       setStatus('success');
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Image compression failed. Please try another file.');
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'Image compression failed. Please try another file.');
       setStatus('error');
     }
   };

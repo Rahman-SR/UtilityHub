@@ -1,13 +1,14 @@
+import { ValidationResult } from './validation';
 import { validatePdfFile } from './pdf-engine';
 
 export type CompressionPreset = 'light' | 'balanced' | 'strong';
 
-export interface CompressPdfOptions {
+export interface CompressionOptions {
   preset?: CompressionPreset;
   maxFileSizeMB?: number;
 }
 
-export interface CompressPdfResult {
+export interface CompressionResult {
   blob: Blob;
   originalSize: number;
   compressedSize: number;
@@ -17,139 +18,112 @@ export interface CompressPdfResult {
   pageCount: number;
 }
 
-// Centralized Compression Preset Configuration
-export const COMPRESSION_PRESETS: Record<
-  CompressionPreset,
-  {
-    id: CompressionPreset;
-    name: string;
-    description: string;
-    badge: string;
-    quality: number; // JPEG Compression Quality (0.0 - 1.0)
-    maxDimension: number; // Max image dimension (px)
-  }
-> = {
+export interface PresetSettings {
+  name: string;
+  badge: string;
+  quality: number;
+  maxDimension: number;
+  description: string;
+}
+
+export const COMPRESSION_PRESETS: Record<CompressionPreset, PresetSettings> = {
   light: {
-    id: 'light',
     name: 'Light Compression',
-    description: 'Better visual quality, moderate file reduction',
     badge: 'High Quality',
-    quality: 0.8,
-    maxDimension: 2048,
+    quality: 0.85,
+    maxDimension: 1800,
+    description: 'Light compression — Highest visual clarity with moderate size reduction.',
   },
   balanced: {
-    id: 'balanced',
     name: 'Balanced Compression',
-    description: 'Recommended default for documents & email',
     badge: 'Recommended',
-    quality: 0.6,
-    maxDimension: 1440,
+    quality: 0.72,
+    maxDimension: 1400,
+    description: 'Balanced (Recommended) — Optimal balance between clarity and file size.',
   },
   strong: {
-    id: 'strong',
     name: 'Strong Compression',
-    description: 'Maximum file size reduction for large scans',
     badge: 'Smallest File',
-    quality: 0.4,
+    quality: 0.55,
     maxDimension: 1000,
+    description: 'Strong compression — Maximum file size reduction for email and web uploads.',
   },
 };
 
 /**
- * Browser-native helper to re-encode and downsample raster image buffers
+ * Downsample raster image bytes using HTML5 Canvas
  */
 async function compressRasterImageBuffer(
-  bytes: Uint8Array,
+  imageBytes: Uint8Array,
   mimeType: string,
   quality: number,
   maxDimension: number
 ): Promise<{ newBytes: Uint8Array; width: number; height: number } | null> {
-  return new Promise((resolve) => {
-    try {
-      const blob = new Blob([bytes.buffer as ArrayBuffer], { type: mimeType });
-      const url = URL.createObjectURL(blob);
-      const img = new Image();
+  if (typeof window === 'undefined') return null;
 
-      img.onload = () => {
-        let width = img.naturalWidth;
-        let height = img.naturalHeight;
+  try {
+    const blob = new Blob([imageBytes as BlobPart], { type: mimeType });
+    const objectUrl = URL.createObjectURL(blob);
 
-        if (width <= 0 || height <= 0) {
-          URL.revokeObjectURL(url);
-          resolve(null);
-          return;
-        }
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = (e) => reject(e);
+      image.src = objectUrl;
+    });
 
-        // Downsample oversized embedded images
-        if (width > maxDimension || height > maxDimension) {
-          if (width > height) {
-            height = Math.round((height * maxDimension) / width);
-            width = maxDimension;
-          } else {
-            width = Math.round((width * maxDimension) / height);
-            height = maxDimension;
-          }
-        }
+    URL.revokeObjectURL(objectUrl);
 
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
+    let { naturalWidth: width, naturalHeight: height } = img;
+    if (width === 0 || height === 0) return null;
 
-        if (!ctx) {
-          URL.revokeObjectURL(url);
-          resolve(null);
-          return;
-        }
-
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(0, 0, width, height);
-        ctx.drawImage(img, 0, 0, width, height);
-
-        URL.revokeObjectURL(url);
-
-        canvas.toBlob(
-          async (compressedBlob) => {
-            if (!compressedBlob) {
-              resolve(null);
-              return;
-            }
-            const buf = await compressedBlob.arrayBuffer();
-            resolve({
-              newBytes: new Uint8Array(buf),
-              width,
-              height,
-            });
-          },
-          'image/jpeg',
-          quality
-        );
-      };
-
-      img.onerror = () => {
-        URL.revokeObjectURL(url);
-        resolve(null);
-      };
-
-      img.src = url;
-    } catch {
-      resolve(null);
+    if (width > maxDimension || height > maxDimension) {
+      if (width > height) {
+        height = Math.round((height * maxDimension) / width);
+        width = maxDimension;
+      } else {
+        width = Math.round((width * maxDimension) / height);
+        height = maxDimension;
+      }
     }
-  });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, width, height);
+    ctx.drawImage(img, 0, 0, width, height);
+
+    const compressedBlob = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob((b) => resolve(b), 'image/jpeg', quality);
+    });
+
+    if (!compressedBlob) return null;
+
+    const newArrayBuffer = await compressedBlob.arrayBuffer();
+    return {
+      newBytes: new Uint8Array(newArrayBuffer),
+      width,
+      height,
+    };
+  } catch {
+    return null;
+  }
 }
 
 /**
- * High-performance 100% Client-Side PDF Compressor Engine
+ * 100% Client-Side PDF Compressor Engine
  */
-export async function compressPdfFile(
+export async function compressPdf(
   file: File,
-  options: CompressPdfOptions = {}
-): Promise<CompressPdfResult> {
+  options: CompressionOptions = {}
+): Promise<CompressionResult> {
   const { preset = 'balanced', maxFileSizeMB = 100 } = options;
 
-  const validation = validatePdfFile(file, maxFileSizeMB);
+  const validation: ValidationResult = validatePdfFile(file, maxFileSizeMB);
   if (!validation.isValid) {
     throw new Error(validation.error || 'Invalid PDF file.');
   }
@@ -160,10 +134,10 @@ export async function compressPdfFile(
   const { PDFDocument, PDFName, PDFNumber, PDFRawStream } = await import('pdf-lib');
   const arrayBuffer = await file.arrayBuffer();
 
-  let pdfDoc: any;
+  let pdfDoc;
   try {
     pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
-  } catch (err: any) {
+  } catch {
     throw new Error(`Could not load "${file.name}". File may be password protected or corrupted.`);
   }
 
@@ -232,3 +206,6 @@ export async function compressPdfFile(
     pageCount,
   };
 }
+
+export const compressPdfFile = compressPdf;
+export type CompressPdfResult = CompressionResult;

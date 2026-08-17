@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, FileText, QrCode, GraduationCap, Calculator, Zap } from 'lucide-react';
+import { Image as ImageIcon, FileText, QrCode, GraduationCap, Calculator, Zap } from 'lucide-react';
 
 export function HeroOrbitalVisual() {
   return (
@@ -18,12 +18,12 @@ export function HeroOrbitalVisual() {
         </div>
       </div>
 
-      {/* Floating Orbital Tool Cards matching Design 1 & 2 */}
+      {/* Floating Orbital Tool Cards */}
 
       {/* 1. Top: Image Tool */}
       <div className="absolute -top-1 sm:top-2 right-1/2 translate-x-1/2 z-20 animate-orbital-float">
         <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white dark:bg-[#1A2238] border border-slate-200/80 dark:border-indigo-500/40 shadow-xl shadow-indigo-500/10 dark:shadow-indigo-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
-          <Image className="w-7 h-7" />
+          <ImageIcon className="w-7 h-7" />
         </div>
       </div>
 

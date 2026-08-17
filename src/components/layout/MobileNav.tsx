@@ -4,7 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import { CATEGORY_LIST } from '@/data/categories';
 import { Wrench, ShieldCheck, ChevronRight } from 'lucide-react';
-import { BRAND_CONFIG } from '@/config/brand';
 
 interface MobileNavProps {
   isOpen: boolean;

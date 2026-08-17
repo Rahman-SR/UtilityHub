@@ -45,8 +45,8 @@ export function CompressPdfWorkspace({ tool }: { tool: ToolMetadata }) {
       setPageCount(meta.pageCount);
       setStatus('file_selected');
       setErrorMessage('');
-    } catch (err: any) {
-      setErrorMessage(err.message || `Could not read "${selectedFile.name}".`);
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : `Could not read "${selectedFile.name}".`);
       setStatus('error');
     }
   };
@@ -62,8 +62,8 @@ export function CompressPdfWorkspace({ tool }: { tool: ToolMetadata }) {
       const res = await compressPdfFile(file, { preset: targetPreset, maxFileSizeMB: tool.maxFileSizeMB });
       setResult(res);
       setStatus('success');
-    } catch (err: any) {
-      setErrorMessage(err.message || 'PDF compression failed. File may be encrypted or corrupted.');
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'PDF compression failed. File may be encrypted or corrupted.');
       setStatus('error');
     }
   };

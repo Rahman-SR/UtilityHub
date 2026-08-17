@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Settings, Layout, FileText, Maximize } from 'lucide-react';
+import { Settings } from 'lucide-react';
 
 export interface PdfLayoutOptionsProps {
   pageSize: 'a4' | 'letter' | 'fit';
@@ -71,16 +71,18 @@ export function PdfLayoutOptionsPanel({
           Page Size
         </label>
         <div className="grid grid-cols-3 gap-2">
-          {[
-            { id: 'a4', label: 'A4 Standard' },
-            { id: 'letter', label: 'US Letter' },
-            { id: 'fit', label: 'Fit Image' },
-          ].map((item) => (
+          {(
+            [
+              { id: 'a4', label: 'A4 Standard' },
+              { id: 'letter', label: 'US Letter' },
+              { id: 'fit', label: 'Fit Image' },
+            ] as const
+          ).map((item) => (
             <button
               key={item.id}
               type="button"
               disabled={disabled}
-              onClick={() => setPageSize(item.id as any)}
+              onClick={() => setPageSize(item.id)}
               className={`p-2.5 rounded-xl border text-[11px] font-extrabold text-center transition-all cursor-pointer ${
                 pageSize === item.id
                   ? 'bg-blue-600 text-white border-blue-600 shadow-xs'

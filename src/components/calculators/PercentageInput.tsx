@@ -13,7 +13,6 @@ export function PercentageInput({
   value,
   onChange,
   slabs = [5, 12, 18, 28],
-  label = 'Rate Percentage (%)',
   helperText,
 }: PercentageInputProps) {
   return (

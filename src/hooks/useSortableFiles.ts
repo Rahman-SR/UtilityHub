@@ -10,27 +10,28 @@ export interface SortableFileItem {
   rotation?: number; // 0, 90, 180, 270
 }
 
+function createItemFromFile(file: File): SortableFileItem {
+  const id = `${file.name}-${file.size}-${Math.random().toString(36).substring(2, 9)}`;
+  const isImage = file.type.startsWith('image/') || /\.(jpg|jpeg|png|webp|gif|bmp)$/i.test(file.name);
+  const objectUrl = isImage ? URL.createObjectURL(file) : undefined;
+  return { id, file, objectUrl, rotation: 0 };
+}
+
+function revokeObjectUrl(item: SortableFileItem) {
+  if (item.objectUrl && item.objectUrl.startsWith('blob:')) {
+    URL.revokeObjectURL(item.objectUrl);
+  }
+}
+
 export function useSortableFiles(initialFiles: File[] = []) {
-  const [items, setItems] = useState<SortableFileItem[]>([]);
+  const [items, setItems] = useState<SortableFileItem[]>(() => initialFiles.map(createItemFromFile));
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const itemsRef = useRef<SortableFileItem[]>(items);
 
-  itemsRef.current = items;
-
-  // Cleanup object URLs on unmount or item deletion
-  const revokeObjectUrl = (item: SortableFileItem) => {
-    if (item.objectUrl && item.objectUrl.startsWith('blob:')) {
-      URL.revokeObjectURL(item.objectUrl);
-    }
-  };
-
-  const createItemFromFile = (file: File): SortableFileItem => {
-    const id = `${file.name}-${file.size}-${Math.random().toString(36).substring(2, 9)}`;
-    const isImage = file.type.startsWith('image/') || /\.(jpg|jpeg|png|webp|gif|bmp)$/i.test(file.name);
-    const objectUrl = isImage ? URL.createObjectURL(file) : undefined;
-    return { id, file, objectUrl, rotation: 0 };
-  };
+  useEffect(() => {
+    itemsRef.current = items;
+  }, [items]);
 
   const addFiles = useCallback((newFiles: File[]) => {
     if (!newFiles || newFiles.length === 0) return;
@@ -98,13 +99,6 @@ export function useSortableFiles(initialFiles: File[] = []) {
       itemsRef.current.forEach(revokeObjectUrl);
     };
   }, []);
-
-  // Sync initial files if provided once
-  useEffect(() => {
-    if (initialFiles.length > 0 && items.length === 0) {
-      addFiles(initialFiles);
-    }
-  }, [initialFiles]);
 
   // Drag Event Handlers
   const handleDragStart = (index: number) => (e: React.DragEvent) => {

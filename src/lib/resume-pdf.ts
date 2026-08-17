@@ -32,7 +32,7 @@ export async function downloadResumePdf(
       autoPaging: 'text',
       margin: [0, 0, 0, 0],
     });
-  } catch (err) {
+  } catch {
     // Fallback to native print if html rendering fails
     window.print();
   }

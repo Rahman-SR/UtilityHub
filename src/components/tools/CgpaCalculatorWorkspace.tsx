@@ -35,7 +35,7 @@ export function CgpaCalculatorWorkspace({ tool }: { tool: ToolMetadata }) {
     setSubjects(subjects.filter((s) => s.id !== id));
   };
 
-  const handleUpdateSubject = (id: string, field: 'gradePoint' | 'credits' | 'name', value: any) => {
+  const handleUpdateSubject = (id: string, field: 'gradePoint' | 'credits' | 'name', value: number | string) => {
     setSubjects(
       subjects.map((s) => (s.id === id ? { ...s, [field]: value } : s))
     );
@@ -108,7 +108,7 @@ export function CgpaCalculatorWorkspace({ tool }: { tool: ToolMetadata }) {
             </div>
 
             <div className="space-y-3.5 max-h-80 overflow-y-auto pr-1">
-              {subjects.map((sub, index) => (
+              {subjects.map((sub) => (
                 <div
                   key={sub.id}
                   className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/80 flex items-center gap-3"
