@@ -1,126 +1,140 @@
 import React from 'react';
 import Link from 'next/link';
 import { BRAND_CONFIG } from '@/config/brand';
-import { ShieldCheck, Zap } from 'lucide-react';
+import { ShieldCheck, Zap, ArrowUpRight } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-[#0B101D] text-slate-400 border-t border-slate-800/80 pt-16 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-          {/* Brand Info */}
-          <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-blue-600 dark:bg-gradient-to-br dark:from-blue-600 dark:to-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-500/20">
+    <footer className="bg-[#0B101D] dark:bg-[#070B14] text-slate-300 border-t border-slate-800/80 pt-16 pb-12 relative overflow-hidden">
+      {/* Background Accent Glow */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/5 dark:bg-indigo-600/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 relative z-10">
+        {/* Main 5-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10 lg:gap-12">
+          {/* Brand Info (Spans 2 columns) */}
+          <div className="md:col-span-2 space-y-5">
+            <Link href="/" className="inline-flex items-center space-x-3 group">
+              <div className="w-10 h-10 rounded-2xl bg-blue-600 dark:bg-gradient-to-br dark:from-blue-600 dark:to-indigo-600 text-white flex items-center justify-center font-extrabold text-xl shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform duration-200">
                 <Zap className="w-5 h-5 fill-current" />
               </div>
-              <span className="font-heading font-extrabold text-xl text-white tracking-tight">
+              <span className="font-heading font-black text-2xl text-white tracking-tight group-hover:text-blue-400 dark:group-hover:text-indigo-400 transition-colors">
                 {BRAND_CONFIG.name}
               </span>
-            </div>
+            </Link>
 
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-sm">
-              Free, fast, and privacy-first online tools. Compress images, merge PDFs, generate QR codes, and calculate finances 100% locally inside your browser.
+            <p className="text-sm text-slate-300 leading-relaxed max-w-md font-medium">
+              Free, fast, and 100% privacy-first online utilities. Compress images, merge PDFs, generate QR codes, and calculate finances directly inside your browser without server uploads.
             </p>
 
-            <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-[#121829] border border-slate-800 text-xs font-semibold text-emerald-400">
+            {/* Privacy Badge */}
+            <div className="inline-flex items-center space-x-2.5 px-4 py-2 rounded-2xl bg-[#121829] border border-slate-800 text-xs sm:text-sm font-bold text-emerald-400 shadow-sm">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>Zero server uploads. Your data is private.</span>
+              <span>Zero Server Uploads • 100% Client-Side</span>
             </div>
           </div>
 
           {/* Quick Category Links */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Categories</h4>
-            <ul className="space-y-2 text-xs font-medium">
+          <div className="space-y-4">
+            <h4 className="text-sm font-extrabold uppercase tracking-wider text-slate-100 font-heading">
+              Categories
+            </h4>
+            <ul className="space-y-2.5 text-sm font-bold text-slate-300">
               <li>
-                <Link href="/image-tools" className="hover:text-indigo-400 transition-colors">
-                  Image Tools
+                <Link href="/image-tools" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Image Tools</span>
                 </Link>
               </li>
               <li>
-                <Link href="/pdf-tools" className="hover:text-indigo-400 transition-colors">
-                  PDF Tools
+                <Link href="/pdf-tools" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>PDF Tools</span>
                 </Link>
               </li>
               <li>
-                <Link href="/calculators" className="hover:text-indigo-400 transition-colors">
-                  Financial Calculators
+                <Link href="/calculators" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Financial Calculators</span>
                 </Link>
               </li>
               <li>
-                <Link href="/student-tools" className="hover:text-indigo-400 transition-colors">
-                  Student Tools
+                <Link href="/student-tools" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Student Tools</span>
                 </Link>
               </li>
               <li>
-                <Link href="/quick-tools" className="hover:text-indigo-400 transition-colors">
-                  Quick Utilities
+                <Link href="/quick-tools" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Quick Utilities</span>
                 </Link>
               </li>
             </ul>
           </div>
 
           {/* Popular Tools */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Popular Tools</h4>
-            <ul className="space-y-2 text-xs font-medium">
+          <div className="space-y-4">
+            <h4 className="text-sm font-extrabold uppercase tracking-wider text-slate-100 font-heading">
+              Popular Tools
+            </h4>
+            <ul className="space-y-2.5 text-sm font-bold text-slate-300">
               <li>
-                <Link href="/tools/image-compressor" className="hover:text-indigo-400 transition-colors">
-                  Image Compressor
+                <Link href="/tools/image-compressor" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Image Compressor</span>
                 </Link>
               </li>
               <li>
-                <Link href="/tools/merge-pdf" className="hover:text-indigo-400 transition-colors">
-                  Merge PDF
+                <Link href="/tools/merge-pdf" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Merge PDF</span>
                 </Link>
               </li>
               <li>
-                <Link href="/tools/split-pdf" className="hover:text-indigo-400 transition-colors">
-                  Split PDF
+                <Link href="/tools/split-pdf" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Split PDF</span>
                 </Link>
               </li>
               <li>
-                <Link href="/tools/qr-code-generator" className="hover:text-indigo-400 transition-colors">
-                  QR Code Generator
+                <Link href="/tools/qr-code-generator" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>QR Code Generator</span>
                 </Link>
               </li>
               <li>
-                <Link href="/tools/jpg-to-png" className="hover:text-indigo-400 transition-colors">
-                  JPG to PNG
+                <Link href="/tools/jpg-to-png" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>JPG to PNG</span>
                 </Link>
               </li>
             </ul>
           </div>
 
           {/* Legal Links */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200">Legal & About</h4>
-            <ul className="space-y-2 text-xs font-medium">
+          <div className="space-y-4">
+            <h4 className="text-sm font-extrabold uppercase tracking-wider text-slate-100 font-heading">
+              Legal & About
+            </h4>
+            <ul className="space-y-2.5 text-sm font-bold text-slate-300">
               <li>
-                <Link href="/about" className="hover:text-indigo-400 transition-colors">
-                  About Us
+                <Link href="/about" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>About Us</span>
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-indigo-400 transition-colors">
-                  Contact
+                <Link href="/contact" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Contact Support</span>
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:text-indigo-400 transition-colors">
-                  Privacy Policy
+                <Link href="/privacy" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Privacy Policy</span>
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-indigo-400 transition-colors">
-                  Terms of Service
+                <Link href="/terms" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Terms of Service</span>
                 </Link>
               </li>
               <li>
-                <Link href="/disclaimer" className="hover:text-indigo-400 transition-colors">
-                  Disclaimer
+                <Link href="/disclaimer" className="hover:text-blue-400 dark:hover:text-indigo-400 transition-colors inline-flex items-center space-x-1">
+                  <span>Disclaimer</span>
                 </Link>
               </li>
             </ul>
@@ -128,11 +142,11 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm font-medium text-slate-400 gap-4">
           <p>© {new Date().getFullYear()} {BRAND_CONFIG.name}. All rights reserved.</p>
 
-          <p className="flex items-center space-x-1">
-            <span>Built with privacy & browser-first engine</span>
+          <p className="flex items-center space-x-1.5 text-slate-400">
+            <span>Powered by 100% Browser HTML5 & WebAssembly Engine</span>
           </p>
         </div>
       </div>

@@ -3,7 +3,6 @@ import { CATEGORY_LIST } from '@/data/categories';
 import { POPULAR_TOOLS } from '@/data/tools';
 import { ToolCard } from '@/components/cards/ToolCard';
 import { CategoryCard } from '@/components/cards/CategoryCard';
-import { SearchBar } from '@/components/search/SearchBar';
 import { HeroOrbitalVisual } from '@/components/home/HeroOrbitalVisual';
 import { AdPlaceholder } from '@/components/ads/AdPlaceholder';
 import { constructMetadata } from '@/lib/seo';
@@ -19,52 +18,47 @@ export const metadata = constructMetadata({
 
 export default function HomePage() {
   return (
-    <div className="space-y-16 sm:space-y-20 pb-16">
+    <div className="space-y-12 sm:space-y-16 pb-16">
       {/* 2-Column Hero Section matching Design 1 & 2 */}
       <section className="relative overflow-hidden pt-8 sm:pt-14 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50/60 via-slate-50 to-slate-50/20 dark:from-[#0B101D] dark:via-[#121829] dark:to-[#0B101D] border-b border-slate-200/80 dark:border-slate-800">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Column Text Content */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Pill Badge */}
-            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-indigo-950/80 text-blue-800 dark:text-indigo-300 text-xs font-black tracking-wider uppercase border border-blue-200 dark:border-indigo-800 shadow-xs">
+            {/* Pill Badge (+1 size & BOLD) */}
+            <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-indigo-950/80 text-blue-900 dark:text-indigo-200 text-xs sm:text-sm font-black tracking-wider uppercase border border-blue-200 dark:border-indigo-800 shadow-xs">
               <Sparkles className="w-4 h-4 text-blue-600 dark:text-indigo-400" />
               <span>⚡ 15+ TOOLS • 100% FREE • PRIVATE</span>
             </div>
 
-            {/* Headline matching user reference image: Tall Condensed Font */}
-            <h1 className="font-hero-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-slate-900 dark:text-slate-100 tracking-wider leading-[0.95] uppercase">
+            {/* Headline (+1 size & BOLD) */}
+            <h1 className="font-hero-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-slate-900 dark:text-slate-100 tracking-wider leading-[0.95] uppercase font-black">
               ONE TOOLBOX. <br />
               <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400 text-transparent bg-clip-text">
                 ENDLESS POSSIBILITIES.
               </span>
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed font-bold uppercase tracking-wide">
+            {/* Subtitle (+1 size & BOLD) */}
+            <p className="text-base sm:text-lg md:text-xl text-slate-800 dark:text-slate-200 max-w-2xl leading-relaxed font-black uppercase tracking-wide">
               POWERFUL EVERYDAY TOOLS FOR IMAGES, PDFS, CALCULATIONS, STUDENTS AND MORE. NO SIGNUP. NO LIMITS.
             </p>
 
-            {/* Prominent Search Bar with Integrated Search Button */}
-            <div className="pt-2">
-              <SearchBar placeholder="SEARCH ANY TOOL YOU NEED (E.G. COMPRESS IMAGE, MERGE PDF, EMI)..." />
-            </div>
-
-            {/* 4 Trust Chips */}
-            <div className="pt-4 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Zap className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+            {/* 4 Trust Chips (+1 size & BOLD) */}
+            <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
+              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Zap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <span>BLAZING FAST</span>
               </div>
-              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Target className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                 <span>100% FREE</span>
               </div>
-              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Lock className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <Lock className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                 <span>NO SIGNUP</span>
               </div>
-              <div className="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <ShieldCheck className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+              <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
+                <ShieldCheck className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                 <span>PRIVACY FIRST</span>
               </div>
             </div>
@@ -77,12 +71,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Ad Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AdPlaceholder />
-      </div>
-
-      {/* Top Categories Section (5-Column Desktop Grid) */}
+      {/* Top Categories Section (5-Column Desktop Grid) — DIRECTLY TO FRONT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="font-heading font-black text-xl sm:text-2xl text-slate-900 dark:text-slate-100">
@@ -104,7 +93,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Popular Tools Section (Compact Horizontal Grid) */}
+      {/* Popular Tools Section (Compact Horizontal Grid) — DIRECTLY TO FRONT */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -128,6 +117,11 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Ad Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AdPlaceholder />
+      </div>
 
       {/* Why Choose Our Tools (Benefits Section) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">

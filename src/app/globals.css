@@ -1,24 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ==========================================================================
+   60-30-10 UI COLOR SYSTEM DESIGN RULE
+   - 60% Dominant Base: Canvas & Body Background (#F8FAFC Light / #0B101D Dark)
+   - 30% Secondary Surface: Cards, Header, Inputs & Containers (#FFFFFF Light / #121829 Dark)
+   - 10% Focal Accent: Primary CTAs, Active States & Brand Highlights (#2563EB Light / #6366F1 Dark)
+   ========================================================================== */
+
 @layer base {
   :root {
+    /* 60% Dominant Neutral Base */
     --background: 210 40% 98%; /* #F8FAFC */
     --foreground: 220 48% 8%; /* #0B1220 */
+
+    /* 30% Secondary Structural Surfaces */
     --surface: 0 0% 100%; /* #FFFFFF */
     --surface-elevated: 210 40% 96.1%; /* #F1F5F9 */
     --muted: 218 13% 41%; /* #5B6475 */
     --muted-foreground: 215 16% 47%; /* #64748B */
     --border: 218 27% 92%; /* #E4E9F2 */
     --input: 218 27% 92%; /* #E4E9F2 */
+
+    /* 10% Primary Focal Accent */
     --primary: 221 83% 53%; /* #2563EB */
     --primary-hover: 224 76% 48%; /* #1D4ED8 */
     --primary-soft: 214 100% 97%; /* #EFF6FF */
     --ring: 221 83% 53%;
     --radius: 0.875rem;
 
-    /* Category Accents */
+    /* Category Accents (Restrained 10% Icon Accents) */
     --cat-image: 217 91% 60%; /* #3B82F6 */
     --cat-image-soft: 214 100% 97%;
     --cat-pdf: 348 83% 60%; /* #F43F5E */
@@ -32,14 +45,19 @@
   }
 
   .dark {
+    /* 60% Dominant Dark Base */
     --background: 222 47% 7%; /* #0B101D */
     --foreground: 210 40% 98%; /* #F8FAFC */
+
+    /* 30% Secondary Dark Surfaces */
     --surface: 223 39% 11%; /* #121829 */
     --surface-elevated: 223 35% 16%; /* #1A2238 */
     --muted: 215 20% 65%;
     --muted-foreground: 215 16% 57%;
     --border: 217 33% 17%; /* #1E293B */
     --input: 217 33% 17%;
+
+    /* 10% Primary Focal Accent */
     --primary: 239 84% 67%; /* #6366F1 */
     --primary-hover: 243 75% 59%;
     --primary-soft: 235 50% 15%;
@@ -62,12 +80,22 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: 'Google Sans', var(--font-inter), system-ui, -apple-system, sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "GRAD" 0;
   overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-family: 'Google Sans', var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "GRAD" 0;
+}
+
+.google-sans {
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "GRAD" 0;
 }
 
 /* Tall Condensed Hero Display Font matching reference image */

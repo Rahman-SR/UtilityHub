@@ -23,7 +23,7 @@ export function SearchBar({
   const results: ToolMetadata[] = query.trim() ? searchTools(query) : [];
 
   return (
-    <div className={`relative w-full max-w-2xl ${className || ''}`}>
+    <div className={`relative w-full max-w-2xl mx-auto ${className || ''}`}>
       {/* Input Container matching Design 1 & 2 */}
       <div className="relative flex items-center p-1.5 bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl shadow-indigo-500/5 transition-all duration-200 focus-within:border-blue-500 dark:focus-within:border-indigo-500 focus-within:ring-4 focus-within:ring-blue-500/10 dark:focus-within:ring-indigo-500/20">
         <div className="pl-3.5 pr-2 text-slate-400 pointer-events-none">
@@ -42,7 +42,7 @@ export function SearchBar({
         {query && (
           <button
             onClick={() => setQuery('')}
-            className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 mr-2"
+            className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 mr-2 cursor-pointer"
             aria-label="Clear search"
           >
             <X className="w-4 h-4" />
@@ -61,7 +61,7 @@ export function SearchBar({
 
       {/* Live Dropdown Results */}
       {isFocused && query.trim().length > 0 && (
-        <div className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800">
+        <div className="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800 text-left">
           {results.length > 0 ? (
             <div className="max-h-80 overflow-y-auto p-2">
               <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">

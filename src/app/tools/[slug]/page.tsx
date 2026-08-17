@@ -17,6 +17,11 @@ import { MergePdfWorkspace } from '@/components/tools/MergePdfWorkspace';
 import { SplitPdfWorkspace } from '@/components/tools/SplitPdfWorkspace';
 import { JpgToPdfWorkspace } from '@/components/tools/JpgToPdfWorkspace';
 
+// Finance INR Workspaces
+import { GstCalculatorWorkspace } from '@/components/tools/GstCalculatorWorkspace';
+import { EmiCalculatorWorkspace } from '@/components/tools/EmiCalculatorWorkspace';
+import { SipCalculatorWorkspace } from '@/components/tools/SipCalculatorWorkspace';
+
 // Generic Fallback Shells
 import { FileToolWorkspace } from '@/components/tools/FileToolWorkspace';
 import { CalculatorWorkspace } from '@/components/tools/CalculatorWorkspace';
@@ -83,6 +88,12 @@ export default async function ToolPage({ params }: ToolPageProps) {
         return <SplitPdfWorkspace tool={tool} />;
       case 'jpg-to-pdf':
         return <JpgToPdfWorkspace tool={tool} />;
+      case 'gst-calculator':
+        return <GstCalculatorWorkspace tool={tool} />;
+      case 'emi-calculator':
+        return <EmiCalculatorWorkspace tool={tool} />;
+      case 'sip-calculator':
+        return <SipCalculatorWorkspace tool={tool} />;
       default:
         // Fallback to generic family workspaces for remaining tools
         if (tool.family === 'file') return <FileToolWorkspace tool={tool} />;
