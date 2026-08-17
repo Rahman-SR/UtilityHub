@@ -269,6 +269,31 @@ export const TOOLS: ToolMetadata[] = [
 
   // --- STUDENT TOOLS ---
   {
+    id: 'resume-builder',
+    name: 'Resume Builder',
+    slug: 'resume-builder',
+    description: 'Create a clean, single-column ATS-friendly resume directly in your browser.',
+    longDescription: 'Build an ATS-optimized resume with customizable section ordering, live A4 preview, and instant PDF download. 100% private with local browser storage.',
+    category: 'student',
+    family: 'generator',
+    icon: 'FileText',
+    keywords: ['resume builder', 'ats resume', 'cv generator', 'job resume', 'student resume', 'resume maker'],
+    featured: true,
+    popular: true,
+    localProcessing: true,
+    howToSteps: [
+      { title: 'Enter personal details', description: 'Fill in your name, target title, and contact information.' },
+      { title: 'Add & reorder sections', description: 'Customize section ordering (Summary, Experience, Education, Skills).' },
+      { title: 'Download PDF', description: 'Review your live A4 ATS preview and download your clean PDF file.' },
+    ],
+    faqs: [
+      { question: 'Is this resume builder ATS friendly?', answer: 'Yes! It uses a single-column layout, standard typography, clear bold headers, and zero graphic skill bars for maximum machine readability.' },
+      { question: 'Is my resume data uploaded to any server?', answer: 'No. All your data stays 100% private in your browser memory and localStorage.' },
+      { question: 'Can I reorder or hide sections?', answer: 'Yes! You can move sections up/down, toggle visibility, and omit empty sections completely.' },
+    ],
+    relatedToolIds: ['cgpa-calculator', 'percentage-calculator', 'attendance-calculator'],
+  },
+  {
     id: 'percentage-calculator',
     name: 'Percentage Calculator',
     slug: 'percentage-calculator',
@@ -289,7 +314,7 @@ export const TOOLS: ToolMetadata[] = [
     faqs: [
       { question: 'How is percentage change calculated?', answer: 'Percentage change is calculated using: ((New Value - Old Value) / |Old Value|) × 100.' },
     ],
-    relatedToolIds: ['cgpa-calculator', 'attendance-calculator'],
+    relatedToolIds: ['resume-builder', 'cgpa-calculator', 'attendance-calculator'],
   },
   {
     id: 'cgpa-calculator',
@@ -312,7 +337,7 @@ export const TOOLS: ToolMetadata[] = [
     faqs: [
       { question: 'How is CGPA converted to percentage?', answer: 'Our calculator uses the standard CBSE guideline: Percentage = CGPA × 9.5. Note that university conversion formulas may vary.' },
     ],
-    relatedToolIds: ['percentage-calculator', 'attendance-calculator'],
+    relatedToolIds: ['resume-builder', 'percentage-calculator', 'attendance-calculator'],
   },
   {
     id: 'attendance-calculator',
@@ -335,7 +360,7 @@ export const TOOLS: ToolMetadata[] = [
     faqs: [
       { question: 'What happens if my attendance is already above target?', answer: 'The calculator will tell you exactly how many upcoming classes you can safely skip without dropping below your target.' },
     ],
-    relatedToolIds: ['percentage-calculator', 'cgpa-calculator'],
+    relatedToolIds: ['resume-builder', 'percentage-calculator', 'cgpa-calculator'],
   },
 
   // --- QUICK TOOLS ---

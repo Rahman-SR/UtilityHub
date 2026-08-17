@@ -58,6 +58,9 @@ const AttendanceCalculatorWorkspace = dynamic(() =>
 const AgeCalculatorWorkspace = dynamic(() =>
   import('@/components/tools/AgeCalculatorWorkspace').then((m) => m.AgeCalculatorWorkspace)
 );
+const ResumeBuilderWorkspace = dynamic(() =>
+  import('@/components/tools/ResumeBuilderWorkspace').then((m) => m.ResumeBuilderWorkspace)
+);
 
 // Generic Fallback Shells
 import { FileToolWorkspace } from '@/components/tools/FileToolWorkspace';
@@ -133,6 +136,8 @@ export default async function ToolPage({ params }: ToolPageProps) {
         return <AttendanceCalculatorWorkspace tool={tool} />;
       case 'age-calculator':
         return <AgeCalculatorWorkspace tool={tool} />;
+      case 'resume-builder':
+        return <ResumeBuilderWorkspace tool={tool} />;
       default:
         if (tool.family === 'file') return <FileToolWorkspace tool={tool} />;
         if (tool.family === 'calculator') return <CalculatorWorkspace tool={tool} />;
@@ -140,8 +145,10 @@ export default async function ToolPage({ params }: ToolPageProps) {
     }
   };
 
+  const isResumeBuilder = tool.slug === 'resume-builder';
+
   return (
-    <ToolPageShell tool={tool}>
+    <ToolPageShell tool={tool} maxWidthClassName={isResumeBuilder ? 'max-w-[1440px]' : 'max-w-6xl'}>
       <JsonLd data={jsonLd} />
       {renderWorkspace()}
     </ToolPageShell>

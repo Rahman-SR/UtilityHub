@@ -8,17 +8,19 @@ import { FAQSection } from '@/components/tools/FAQSection';
 import { RelatedTools } from '@/components/tools/RelatedTools';
 import { AdPlaceholder } from '@/components/ads/AdPlaceholder';
 import { ShieldCheck } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ToolPageShellProps {
   tool: ToolMetadata;
   children: React.ReactNode;
+  maxWidthClassName?: string;
 }
 
-export function ToolPageShell({ tool, children }: ToolPageShellProps) {
+export function ToolPageShell({ tool, children, maxWidthClassName = 'max-w-6xl' }: ToolPageShellProps) {
   const category = CATEGORIES[tool.category];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-6">
+    <div className={cn('mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-6', maxWidthClassName)}>
       {/* Compact Breadcrumb Navigation */}
       <Breadcrumbs
         items={[
