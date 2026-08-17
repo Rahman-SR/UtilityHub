@@ -2,118 +2,122 @@
 
 import React, { useState } from 'react';
 import { ToolMetadata } from '@/types/tool';
-import { Input } from '../ui/Input';
-import { Button } from '../ui/Button';
-import { ResultCard } from './ResultCard';
-import { RotateCcw, TrendingUp, Info } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
+import { calculateSIP } from '@/lib/calculators/sip';
+import { formatINR } from '@/lib/calculators/formatters';
+import { CalculatorShell } from '../calculators/CalculatorShell';
+import { CalculatorInput } from '../calculators/CalculatorInput';
+import { NumberInput } from '../calculators/NumberInput';
+import { ResultPanel } from '../calculators/ResultPanel';
+import { ResultMetric } from '../calculators/ResultMetric';
+import { ValidationMessage } from '../calculators/ValidationMessage';
+import { VisualBar } from '../calculators/VisualBar';
 
 export function SipCalculatorWorkspace({ tool }: { tool: ToolMetadata }) {
-  const [monthlyInvestment, setMonthlyInvestment] = useState<number>(5000); // ₹ 5,000 / month
-  const [expectedRate, setExpectedRate] = useState<number>(12); // 12% p.a.
-  const [timeYears, setTimeYears] = useState<number>(10);
+  const [monthlyInvestment, setMonthlyInvestment] = useState<number>(5000);
+  const [expectedReturnRate, setExpectedReturnRate] = useState<number>(12);
+  const [investmentYears, setInvestmentYears] = useState<number>(10);
 
-  const months = timeYears * 12;
-  const i = expectedRate / 12 / 100;
-
-  // SIP Future Value formula: M = P × ({[1 + i]^n - 1} / i) × (1 + i)
-  const futureValue =
-    i > 0
-      ? monthlyInvestment * (((Math.pow(1 + i, months) - 1) / i) * (1 + i))
-      : monthlyInvestment * months;
-
-  const totalInvested = monthlyInvestment * months;
-  const estimatedReturns = futureValue - totalInvested;
+  const sipResult = calculateSIP({ monthlyInvestment, expectedReturnRate, investmentYears });
 
   const handleReset = () => {
     setMonthlyInvestment(5000);
-    setExpectedRate(12);
-    setTimeYears(10);
+    setExpectedReturnRate(12);
+    setInvestmentYears(10);
   };
 
-  const formatINR = (val: number) => {
-    return `₹${Math.round(val).toLocaleString('en-IN')}`;
-  };
+  const copyText = sipResult.isValid
+    ? `SIP Projection Summary:\nMonthly Investment: ${formatINR(monthlyInvestment)}\nInvested Amount: ${formatINR(sipResult.investedAmount)}\nEstimated Returns: ${formatINR(sipResult.estimatedReturns)}\nFuture Maturity Value: ${formatINR(sipResult.futureValue)}`
+    : '';
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 md:p-8 bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl space-y-8">
-      {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold">
-            <TrendingUp className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-heading font-extrabold text-lg text-slate-900 dark:text-slate-100">
-              SIP Return Calculator (₹ INR)
-            </h3>
-            <p className="text-xs text-slate-500 font-medium">Systematic Investment Plan Wealth Growth in Indian Rupees (₹)</p>
-          </div>
-        </div>
+    <CalculatorShell
+      title={tool.name}
+      subtitle="Systematic Investment Plan Wealth Growth (₹ INR)"
+      icon={TrendingUp}
+      iconColor="bg-purple-100 dark:bg-purple-950 text-purple-600 dark:text-purple-400"
+      onReset={handleReset}
+      copySummaryText={copyText}
+      inputs={
+        <>
+          {/* Monthly Investment */}
+          <CalculatorInput label="Monthly SIP Amount (₹ INR)" helperText="Amount invested every month">
+            <NumberInput
+              value={monthlyInvestment}
+              onChange={setMonthlyInvestment}
+              prefix="₹"
+              placeholder="e.g. 5000"
+              min={100}
+            />
+          </CalculatorInput>
 
-        <Button variant="ghost" size="sm" onClick={handleReset} className="cursor-pointer">
-          <RotateCcw className="w-4 h-4 mr-1" />
-          Reset
-        </Button>
-      </div>
+          {/* Expected Return */}
+          <CalculatorInput label="Expected Annual Return Rate (% p.a.)" helperText="Historical equity mutual fund benchmark rate (~12-15%)">
+            <NumberInput
+              value={expectedReturnRate}
+              onChange={setExpectedReturnRate}
+              suffix="%"
+              placeholder="e.g. 12"
+              step="0.5"
+              min={0}
+              max={100}
+            />
+          </CalculatorInput>
 
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Input Panel */}
-        <div className="space-y-5">
-          <Input
-            label="Monthly SIP Investment (₹ INR)"
-            type="number"
-            value={monthlyInvestment}
-            onChange={(e) => setMonthlyInvestment(Number(e.target.value))}
-            helperText="e.g. ₹ 5,000 per month"
-          />
+          {/* Duration */}
+          <CalculatorInput label="Investment Duration (Years)" helperText={`Total ${investmentYears * 12} monthly compounding periods`}>
+            <NumberInput
+              value={investmentYears}
+              onChange={setInvestmentYears}
+              suffix="Years"
+              placeholder="e.g. 10"
+              min={1}
+              max={50}
+            />
+          </CalculatorInput>
 
-          <Input
-            label="Expected Return Rate (% p.a.)"
-            type="number"
-            step="0.5"
-            value={expectedRate}
-            onChange={(e) => setExpectedRate(Number(e.target.value))}
-            helperText="e.g. 12% annual returns for equity mutual funds"
-          />
-
-          <Input
-            label="Investment Tenure (Years)"
-            type="number"
-            value={timeYears}
-            onChange={(e) => setTimeYears(Number(e.target.value))}
-            helperText={`Equivalent to ${months} monthly SIP installments`}
-          />
-        </div>
-
-        {/* Result Cards Panel */}
-        <div className="space-y-4 flex flex-col justify-center">
-          <ResultCard
-            title="Total Expected Maturity Value"
-            value={formatINR(futureValue)}
-            subtitle="Future Wealth Value in ₹ INR"
+          <ValidationMessage message={sipResult.error} />
+        </>
+      }
+      results={
+        <ResultPanel note="Disclaimer: SIP projections are mathematical estimates based on monthly compounding. Mutual fund investments are subject to market risks and returns are not guaranteed.">
+          <ResultMetric
+            title="Estimated Future Maturity Value"
+            value={formatINR(sipResult.futureValue)}
+            subtitle="Total Wealth Value after compounding"
             variant="primary"
           />
 
           <div className="grid grid-cols-2 gap-3">
-            <ResultCard
-              title="Total Amount Invested"
-              value={formatINR(totalInvested)}
+            <ResultMetric
+              title="Total Invested Amount"
+              value={formatINR(sipResult.investedAmount)}
+              subtitle="Your Capital"
               variant="neutral"
             />
-            <ResultCard
-              title="Estimated Wealth Gain"
-              value={formatINR(estimatedReturns)}
+            <ResultMetric
+              title="Estimated Returns"
+              value={formatINR(sipResult.estimatedReturns)}
+              subtitle="Wealth Gain"
               variant="success"
             />
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 flex items-start space-x-2 text-xs text-slate-500 font-medium">
-            <Info className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
-            <span>Formatted in Indian Rupees (en-IN). SIP compounding assumes regular monthly investments.</span>
-          </div>
-        </div>
-      </div>
-    </div>
+          {/* Visual Ratio Breakdown */}
+          {sipResult.isValid && (
+            <VisualBar
+              segment1Label="Invested"
+              segment1Value={formatINR(sipResult.investedAmount)}
+              segment1Percent={sipResult.investedPercentage}
+              segment1Color="bg-blue-600 dark:bg-indigo-600"
+              segment2Label="Returns"
+              segment2Value={formatINR(sipResult.estimatedReturns)}
+              segment2Percent={sipResult.returnsPercentage}
+              segment2Color="bg-emerald-500"
+            />
+          )}
+        </ResultPanel>
+      }
+    />
   );
 }

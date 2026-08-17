@@ -1,38 +1,68 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { getToolBySlug, TOOLS } from '@/data/tools';
-import { CATEGORIES } from '@/data/categories';
-import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
+import { constructMetadata, generateToolJsonLd } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { ToolPageShell } from '@/components/layout/ToolPageShell';
 
-// Phase 2.2 Image & QR Workspaces
-import { ImageCompressorWorkspace } from '@/components/tools/ImageCompressorWorkspace';
-import { ImageResizerWorkspace } from '@/components/tools/ImageResizerWorkspace';
-import { JpgToPngWorkspace } from '@/components/tools/JpgToPngWorkspace';
-import { PngToJpgWorkspace } from '@/components/tools/PngToJpgWorkspace';
-import { ImageToPdfWorkspace } from '@/components/tools/ImageToPdfWorkspace';
-import { QrGeneratorWorkspace } from '@/components/tools/QrGeneratorWorkspace';
-
-// Phase 2.3 PDF Workspaces
-import { MergePdfWorkspace } from '@/components/tools/MergePdfWorkspace';
-import { SplitPdfWorkspace } from '@/components/tools/SplitPdfWorkspace';
-import { JpgToPdfWorkspace } from '@/components/tools/JpgToPdfWorkspace';
-
-// Finance INR Workspaces
-import { GstCalculatorWorkspace } from '@/components/tools/GstCalculatorWorkspace';
-import { EmiCalculatorWorkspace } from '@/components/tools/EmiCalculatorWorkspace';
-import { SipCalculatorWorkspace } from '@/components/tools/SipCalculatorWorkspace';
+// Code-split all tool workspace components dynamically to prevent loading unneeded engines
+const ImageCompressorWorkspace = dynamic(() =>
+  import('@/components/tools/ImageCompressorWorkspace').then((m) => m.ImageCompressorWorkspace)
+);
+const ImageResizerWorkspace = dynamic(() =>
+  import('@/components/tools/ImageResizerWorkspace').then((m) => m.ImageResizerWorkspace)
+);
+const JpgToPngWorkspace = dynamic(() =>
+  import('@/components/tools/JpgToPngWorkspace').then((m) => m.JpgToPngWorkspace)
+);
+const PngToJpgWorkspace = dynamic(() =>
+  import('@/components/tools/PngToJpgWorkspace').then((m) => m.PngToJpgWorkspace)
+);
+const ImageToPdfWorkspace = dynamic(() =>
+  import('@/components/tools/ImageToPdfWorkspace').then((m) => m.ImageToPdfWorkspace)
+);
+const QrGeneratorWorkspace = dynamic(() =>
+  import('@/components/tools/QrGeneratorWorkspace').then((m) => m.QrGeneratorWorkspace)
+);
+const CompressPdfWorkspace = dynamic(() =>
+  import('@/components/tools/CompressPdfWorkspace').then((m) => m.CompressPdfWorkspace)
+);
+const MergePdfWorkspace = dynamic(() =>
+  import('@/components/tools/MergePdfWorkspace').then((m) => m.MergePdfWorkspace)
+);
+const SplitPdfWorkspace = dynamic(() =>
+  import('@/components/tools/SplitPdfWorkspace').then((m) => m.SplitPdfWorkspace)
+);
+const JpgToPdfWorkspace = dynamic(() =>
+  import('@/components/tools/JpgToPdfWorkspace').then((m) => m.JpgToPdfWorkspace)
+);
+const GstCalculatorWorkspace = dynamic(() =>
+  import('@/components/tools/GstCalculatorWorkspace').then((m) => m.GstCalculatorWorkspace)
+);
+const EmiCalculatorWorkspace = dynamic(() =>
+  import('@/components/tools/EmiCalculatorWorkspace').then((m) => m.EmiCalculatorWorkspace)
+);
+const SipCalculatorWorkspace = dynamic(() =>
+  import('@/components/tools/SipCalculatorWorkspace').then((m) => m.SipCalculatorWorkspace)
+);
+const PercentageCalculatorWorkspace = dynamic(() =>
+  import('@/components/tools/PercentageCalculatorWorkspace').then((m) => m.PercentageCalculatorWorkspace)
+);
+const CgpaCalculatorWorkspace = dynamic(() =>
+  import('@/components/tools/CgpaCalculatorWorkspace').then((m) => m.CgpaCalculatorWorkspace)
+);
+const AttendanceCalculatorWorkspace = dynamic(() =>
+  import('@/components/tools/AttendanceCalculatorWorkspace').then((m) => m.AttendanceCalculatorWorkspace)
+);
+const AgeCalculatorWorkspace = dynamic(() =>
+  import('@/components/tools/AgeCalculatorWorkspace').then((m) => m.AgeCalculatorWorkspace)
+);
 
 // Generic Fallback Shells
 import { FileToolWorkspace } from '@/components/tools/FileToolWorkspace';
 import { CalculatorWorkspace } from '@/components/tools/CalculatorWorkspace';
 import { GeneratorWorkspace } from '@/components/tools/GeneratorWorkspace';
-
-import { FAQSection } from '@/components/tools/FAQSection';
-import { RelatedTools } from '@/components/tools/RelatedTools';
-import { AdPlaceholder } from '@/components/ads/AdPlaceholder';
-import { constructMetadata, generateToolJsonLd } from '@/lib/seo';
-import { JsonLd } from '@/components/seo/JsonLd';
-import { ShieldCheck } from 'lucide-react';
 
 interface ToolPageProps {
   params: Promise<{ slug: string }>;
@@ -64,10 +94,9 @@ export default async function ToolPage({ params }: ToolPageProps) {
     notFound();
   }
 
-  const category = CATEGORIES[tool.category];
   const jsonLd = generateToolJsonLd(tool);
 
-  // Router dispatcher matching Phase 2.2 & 2.3 functional workspaces
+  // Router dispatcher matching code-split workspace chunks
   const renderWorkspace = () => {
     switch (tool.slug) {
       case 'image-compressor':
@@ -82,6 +111,8 @@ export default async function ToolPage({ params }: ToolPageProps) {
         return <ImageToPdfWorkspace tool={tool} />;
       case 'qr-code-generator':
         return <QrGeneratorWorkspace tool={tool} />;
+      case 'compress-pdf':
+        return <CompressPdfWorkspace tool={tool} />;
       case 'merge-pdf':
         return <MergePdfWorkspace tool={tool} />;
       case 'split-pdf':
@@ -94,8 +125,15 @@ export default async function ToolPage({ params }: ToolPageProps) {
         return <EmiCalculatorWorkspace tool={tool} />;
       case 'sip-calculator':
         return <SipCalculatorWorkspace tool={tool} />;
+      case 'percentage-calculator':
+        return <PercentageCalculatorWorkspace tool={tool} />;
+      case 'cgpa-calculator':
+        return <CgpaCalculatorWorkspace tool={tool} />;
+      case 'attendance-calculator':
+        return <AttendanceCalculatorWorkspace tool={tool} />;
+      case 'age-calculator':
+        return <AgeCalculatorWorkspace tool={tool} />;
       default:
-        // Fallback to generic family workspaces for remaining tools
         if (tool.family === 'file') return <FileToolWorkspace tool={tool} />;
         if (tool.family === 'calculator') return <CalculatorWorkspace tool={tool} />;
         return <GeneratorWorkspace tool={tool} />;
@@ -103,75 +141,9 @@ export default async function ToolPage({ params }: ToolPageProps) {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+    <ToolPageShell tool={tool}>
       <JsonLd data={jsonLd} />
-
-      <Breadcrumbs
-        items={[
-          { label: category ? category.name : 'Tools', href: category ? `/${category.slug}` : '/tools' },
-          { label: tool.name },
-        ]}
-      />
-
-      {/* Header */}
-      <div className="max-w-3xl space-y-4">
-        <div className="flex items-center space-x-2">
-          <span className="px-3 py-1 rounded-full bg-blue-100 dark:bg-indigo-950 text-blue-800 dark:text-indigo-300 text-xs font-black uppercase tracking-wider">
-            {category ? category.name : tool.category}
-          </span>
-          {tool.localProcessing && (
-            <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-xs font-bold">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Browser Local Processing</span>
-            </span>
-          )}
-        </div>
-
-        <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-slate-900 dark:text-slate-100 tracking-tight">
-          {tool.name}
-        </h1>
-
-        <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-          {tool.longDescription || tool.description}
-        </p>
-      </div>
-
-      {/* Main Tool Workspace */}
-      <section className="pt-2">{renderWorkspace()}</section>
-
-      {/* Ad Slot */}
-      <AdPlaceholder />
-
-      {/* How To Use Steps */}
-      {tool.howToSteps && tool.howToSteps.length > 0 && (
-        <section className="max-w-4xl mx-auto my-12 p-8 rounded-3xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs space-y-6">
-          <h2 className="font-heading font-black text-2xl text-slate-900 dark:text-slate-100">
-            How to use {tool.name}
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {tool.howToSteps.map((step, idx) => (
-              <div key={idx} className="space-y-2 relative">
-                <div className="w-8 h-8 rounded-full bg-blue-600 dark:bg-indigo-600 text-white font-bold flex items-center justify-center text-sm">
-                  {idx + 1}
-                </div>
-                <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
-                  {step.title}
-                </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* FAQ Section */}
-      <FAQSection faqs={tool.faqs} />
-
-      {/* Related Tools */}
-      <RelatedTools currentTool={tool} />
-    </div>
+      {renderWorkspace()}
+    </ToolPageShell>
   );
 }

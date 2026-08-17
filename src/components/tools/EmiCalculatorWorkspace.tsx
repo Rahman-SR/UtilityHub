@@ -2,118 +2,155 @@
 
 import React, { useState } from 'react';
 import { ToolMetadata } from '@/types/tool';
-import { Input } from '../ui/Input';
-import { Button } from '../ui/Button';
-import { ResultCard } from './ResultCard';
-import { RotateCcw, BadgePercent, Info } from 'lucide-react';
+import { BadgePercent } from 'lucide-react';
+import { calculateEMI, TenureType } from '@/lib/calculators/emi';
+import { formatINR } from '@/lib/calculators/formatters';
+import { CalculatorShell } from '../calculators/CalculatorShell';
+import { CalculatorInput } from '../calculators/CalculatorInput';
+import { NumberInput } from '../calculators/NumberInput';
+import { ResultPanel } from '../calculators/ResultPanel';
+import { ResultMetric } from '../calculators/ResultMetric';
+import { ValidationMessage } from '../calculators/ValidationMessage';
+import { VisualBar } from '../calculators/VisualBar';
 
 export function EmiCalculatorWorkspace({ tool }: { tool: ToolMetadata }) {
-  const [principal, setPrincipal] = useState<number>(500000); // ₹ 5 Lakhs default
-  const [rate, setRate] = useState<number>(8.5);
-  const [tenureYears, setTenureYears] = useState<number>(5);
+  const [principal, setPrincipal] = useState<number>(500000);
+  const [annualRate, setAnnualRate] = useState<number>(8.5);
+  const [tenure, setTenure] = useState<number>(5);
+  const [tenureType, setTenureType] = useState<TenureType>('years');
 
-  const tenureMonths = tenureYears * 12;
-  const monthlyRate = rate / 12 / 100;
-
-  const emi =
-    monthlyRate > 0
-      ? (principal * monthlyRate * Math.pow(1 + monthlyRate, tenureMonths)) /
-        (Math.pow(1 + monthlyRate, tenureMonths) - 1)
-      : principal / tenureMonths;
-
-  const totalPayment = emi * tenureMonths;
-  const totalInterest = totalPayment - principal;
+  const emiResult = calculateEMI({ principal, annualRate, tenure, tenureType });
 
   const handleReset = () => {
     setPrincipal(500000);
-    setRate(8.5);
-    setTenureYears(5);
+    setAnnualRate(8.5);
+    setTenure(5);
+    setTenureType('years');
   };
 
-  const formatINR = (val: number) => {
-    return `₹${Math.round(val).toLocaleString('en-IN')}`;
-  };
+  const copyText = emiResult.isValid
+    ? `EMI Loan Summary:\nLoan Amount: ${formatINR(principal)}\nMonthly EMI: ${formatINR(emiResult.monthlyEmi)}\nTotal Interest: ${formatINR(emiResult.totalInterest)}\nTotal Payment: ${formatINR(emiResult.totalPayment)}`
+    : '';
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 md:p-8 bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl space-y-8">
-      {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold">
-            <BadgePercent className="w-5 h-5" />
+    <CalculatorShell
+      title={tool.name}
+      subtitle="Reducing Balance Loan EMI Calculator (₹ INR)"
+      icon={BadgePercent}
+      iconColor="bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400"
+      onReset={handleReset}
+      copySummaryText={copyText}
+      inputs={
+        <>
+          {/* Principal Input */}
+          <CalculatorInput label="Loan Amount (₹ INR)" helperText="Principal loan amount requested">
+            <NumberInput
+              value={principal}
+              onChange={setPrincipal}
+              prefix="₹"
+              placeholder="e.g. 500000"
+              min={0}
+            />
+          </CalculatorInput>
+
+          {/* Interest Rate */}
+          <CalculatorInput label="Annual Interest Rate (% p.a.)" helperText="Annual interest percentage (0% for no-cost EMI)">
+            <NumberInput
+              value={annualRate}
+              onChange={setAnnualRate}
+              suffix="%"
+              placeholder="e.g. 8.5"
+              step="0.1"
+              min={0}
+              max={100}
+            />
+          </CalculatorInput>
+
+          {/* Tenure Input & Type */}
+          <div className="space-y-1.5 text-left">
+            <div className="flex items-center justify-between">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                Loan Tenure
+              </label>
+              <div className="flex space-x-1 p-0.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs font-bold">
+                <button
+                  type="button"
+                  onClick={() => setTenureType('years')}
+                  className={`px-2 py-0.5 rounded-md transition-all cursor-pointer ${
+                    tenureType === 'years'
+                      ? 'bg-blue-600 dark:bg-indigo-600 text-white'
+                      : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100'
+                  }`}
+                >
+                  Yr
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTenureType('months')}
+                  className={`px-2 py-0.5 rounded-md transition-all cursor-pointer ${
+                    tenureType === 'months'
+                      ? 'bg-blue-600 dark:bg-indigo-600 text-white'
+                      : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-100'
+                  }`}
+                >
+                  Mo
+                </button>
+              </div>
+            </div>
+            <NumberInput
+              value={tenure}
+              onChange={setTenure}
+              suffix={tenureType === 'years' ? 'Years' : 'Months'}
+              placeholder="e.g. 5"
+              min={1}
+            />
+            <p className="text-xs text-slate-500 font-medium">
+              Equivalent to {emiResult.totalMonths} monthly installments
+            </p>
           </div>
-          <div>
-            <h3 className="font-heading font-extrabold text-lg text-slate-900 dark:text-slate-100">
-              Loan EMI Calculator (₹ INR)
-            </h3>
-            <p className="text-xs text-slate-500 font-medium">Equated Monthly Installment in Indian Rupees (₹)</p>
-          </div>
-        </div>
 
-        <Button variant="ghost" size="sm" onClick={handleReset} className="cursor-pointer">
-          <RotateCcw className="w-4 h-4 mr-1" />
-          Reset
-        </Button>
-      </div>
-
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Input Panel */}
-        <div className="space-y-5">
-          <Input
-            label="Loan Principal Amount (₹ INR)"
-            type="number"
-            value={principal}
-            onChange={(e) => setPrincipal(Number(e.target.value))}
-            helperText="e.g. ₹ 5,00,000 (5 Lakhs)"
-          />
-
-          <Input
-            label="Annual Interest Rate (% p.a.)"
-            type="number"
-            step="0.1"
-            value={rate}
-            onChange={(e) => setRate(Number(e.target.value))}
-            helperText="Annual interest rate percentage"
-          />
-
-          <Input
-            label="Loan Tenure (Years)"
-            type="number"
-            value={tenureYears}
-            onChange={(e) => setTenureYears(Number(e.target.value))}
-            helperText={`Equivalent to ${tenureMonths} monthly EMI installments`}
-          />
-        </div>
-
-        {/* Result Cards Panel */}
-        <div className="space-y-4 flex flex-col justify-center">
-          <ResultCard
+          <ValidationMessage message={emiResult.error} />
+        </>
+      }
+      results={
+        <ResultPanel note="Standard Reducing Balance Formula: EMI = [P x R x (1+R)^N] / [(1+R)^N-1]. Zero-interest loans divide principal equally.">
+          <ResultMetric
             title="Monthly EMI Payment"
-            value={formatINR(emi)}
-            subtitle="Equated Monthly Installment (₹/month)"
+            value={formatINR(emiResult.monthlyEmi)}
+            subtitle="Equated Monthly Installment"
             variant="primary"
           />
 
           <div className="grid grid-cols-2 gap-3">
-            <ResultCard
+            <ResultMetric
               title="Total Interest"
-              value={formatINR(totalInterest)}
+              value={formatINR(emiResult.totalInterest)}
+              subtitle="Interest Component"
               variant="neutral"
             />
-            <ResultCard
+            <ResultMetric
               title="Total Amount Payable"
-              value={formatINR(totalPayment)}
+              value={formatINR(emiResult.totalPayment)}
+              subtitle="Principal + Interest"
               variant="success"
             />
           </div>
 
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 flex items-start space-x-2 text-xs text-slate-500 font-medium">
-            <Info className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-            <span>Calculated in Indian Rupee format (en-IN). Formula: EMI = [P x R x (1+R)^N] / [(1+R)^N-1].</span>
-          </div>
-        </div>
-      </div>
-    </div>
+          {/* Visual Ratio Breakdown */}
+          {emiResult.isValid && (
+            <VisualBar
+              segment1Label="Principal"
+              segment1Value={formatINR(principal)}
+              segment1Percent={emiResult.principalPercentage}
+              segment1Color="bg-blue-600 dark:bg-indigo-600"
+              segment2Label="Interest"
+              segment2Value={formatINR(emiResult.totalInterest)}
+              segment2Percent={emiResult.interestPercentage}
+              segment2Color="bg-amber-500"
+            />
+          )}
+        </ResultPanel>
+      }
+    />
   );
 }

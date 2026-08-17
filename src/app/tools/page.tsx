@@ -10,7 +10,7 @@ import { Wrench } from 'lucide-react';
 export const metadata = constructMetadata({
   title: 'All Free Utility Tools — Daily Utility Hub',
   description:
-    'Browse all 15 free online tools for image compression, PDF merging, QR code generation, GST calculation, EMI calculation, and student tools. 100% browser-based.',
+    'Browse all 16 free online tools for image compression, PDF merging, QR code generation, GST calculation, EMI calculation, and student tools. 100% browser-based.',
   canonicalUrl: 'https://dailyutilityhub.com/tools',
 });
 
@@ -22,7 +22,7 @@ export default function AllToolsPage() {
       {/* Header Banner */}
       <div className="space-y-2 max-w-3xl pb-6 border-b border-slate-200/80 dark:border-slate-800">
         <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-indigo-950/80 text-blue-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-wider border border-blue-200/80 dark:border-indigo-800">
-          <Wrench className="w-3.5 h-3.5" />
+          <Wrench className="w-3.5 h-3.5" strokeWidth={1.75} />
           <span>Full Directory</span>
         </div>
         <h1 className="font-heading font-black text-3xl sm:text-4xl md:text-5xl text-slate-900 dark:text-slate-100 tracking-tight">
@@ -33,7 +33,7 @@ export default function AllToolsPage() {
         </p>
       </div>
 
-      {/* Tools Grouped by Category — DIRECTLY FRONT AND CENTER */}
+      {/* Tools Grouped by Category */}
       <div className="space-y-12">
         {CATEGORY_LIST.map((category) => {
           const categoryTools = TOOLS.filter((t) => t.category === category.id);
@@ -46,14 +46,14 @@ export default function AllToolsPage() {
                   <h2 className="font-heading font-black text-2xl text-slate-900 dark:text-slate-100">
                     {category.name}
                   </h2>
-                  <p className="text-xs text-slate-500">{category.description}</p>
+                  <p className="text-xs text-slate-500 font-medium">{category.description}</p>
                 </div>
                 <span className="text-xs font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
                   {categoryTools.length} Tools
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {categoryTools.map((tool) => (
                   <ToolCard key={tool.id} tool={tool} />
                 ))}

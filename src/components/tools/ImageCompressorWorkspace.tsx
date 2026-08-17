@@ -8,15 +8,14 @@ import { compressImage } from '@/lib/image-processing';
 import { validateImageFile } from '@/lib/validation';
 import { downloadBlob, getOutputFilename } from '@/lib/download';
 import { formatFileSize } from '@/lib/utils';
-import { FileText, Download, RotateCcw, CheckCircle2, AlertCircle, Loader2, Sparkles, Sliders } from 'lucide-react';
+import { SingleFilePreviewCard } from '../file-workspace/SingleFilePreviewCard';
+import { Download, RotateCcw, CheckCircle2, AlertCircle, Loader2, Sparkles, Sliders } from 'lucide-react';
 
 export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
   const [status, setStatus] = useState<'initial' | 'file_selected' | 'processing' | 'success' | 'error'>('initial');
   const [file, setFile] = useState<File | null>(null);
   const [quality, setQuality] = useState<number>(0.75);
   const [compressedBlob, setCompressedBlob] = useState<Blob | null>(null);
-  const [originalDimensions, setOriginalDimensions] = useState<{ width: number; height: number } | null>(null);
-  const [compressedDimensions, setCompressedDimensions] = useState<{ width: number; height: number } | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -47,9 +46,7 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
     try {
       const result = await compressImage(file, quality);
       setCompressedBlob(result.blob);
-      setCompressedDimensions(result.dimensions);
 
-      // Create preview object URL
       if (previewUrl) URL.revokeObjectURL(previewUrl);
       const url = URL.createObjectURL(result.blob);
       setPreviewUrl(url);
@@ -76,7 +73,6 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
     setStatus('initial');
   };
 
-  // Saved percentage calculation
   const originalSize = file ? file.size : 0;
   const compressedSize = compressedBlob ? compressedBlob.size : 0;
   const savedPercent =
@@ -85,7 +81,7 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
       : 0;
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 md:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl space-y-6">
+    <div className="w-full max-w-4xl mx-auto p-6 md:p-8 bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl space-y-6">
       {/* Initial Upload State */}
       {status === 'initial' && (
         <DropZone
@@ -98,31 +94,16 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
       {/* File Selected State */}
       {(status === 'file_selected' || status === 'processing') && file && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-                <FileText className="w-5 h-5" />
-              </div>
-              <div className="truncate">
-                <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">{file.name}</h4>
-                <p className="text-xs text-slate-500">Original Size: {formatFileSize(file.size)}</p>
-              </div>
-            </div>
-
-            <Button variant="ghost" size="sm" onClick={handleReset} disabled={status === 'processing'}>
-              <RotateCcw className="w-4 h-4 mr-1" />
-              Change Image
-            </Button>
-          </div>
+          <SingleFilePreviewCard file={file} onReplaceFile={handleReset} />
 
           {/* Controls: Quality Slider */}
-          <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 space-y-4">
+          <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 space-y-4">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center">
-                <Sliders className="w-4 h-4 mr-2 text-blue-600" />
+              <label className="text-sm font-extrabold text-slate-900 dark:text-slate-100 flex items-center">
+                <Sliders className="w-4 h-4 mr-2 text-blue-600 dark:text-indigo-400" strokeWidth={1.75} />
                 Target Quality Level
               </label>
-              <span className="text-sm font-extrabold text-blue-600 dark:text-blue-400">
+              <span className="text-sm font-extrabold text-blue-600 dark:text-indigo-400">
                 {Math.round(quality * 100)}%
               </span>
             </div>
@@ -138,7 +119,7 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
               className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-600"
             />
 
-            <div className="flex justify-between text-[11px] text-slate-400 font-medium">
+            <div className="flex justify-between text-[11px] text-slate-400 font-semibold">
               <span>Maximum Compression (Smaller Size)</span>
               <span>Maximum Quality (Larger Size)</span>
             </div>
@@ -165,12 +146,12 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
       {/* Success Result State */}
       {status === 'success' && file && compressedBlob && (
         <div className="space-y-6">
-          <div className="p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center space-y-3">
-            <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto" />
+          <div className="p-6 rounded-3xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center space-y-3">
+            <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto" strokeWidth={1.75} />
             <h3 className="text-xl font-extrabold text-emerald-900 dark:text-emerald-100 font-heading">
               Compression Successful!
             </h3>
-            <p className="text-xs text-emerald-700 dark:text-emerald-300">
+            <p className="text-xs text-emerald-700 dark:text-emerald-300 font-semibold">
               Processed 100% locally in your browser memory.
             </p>
           </div>
@@ -192,8 +173,8 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
             </div>
 
             <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center">
-              <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 block flex items-center justify-center">
-                <Sparkles className="w-3.5 h-3.5 mr-1" />
+              <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <Sparkles className="w-3.5 h-3.5 mr-1" strokeWidth={1.75} />
                 Space Saved
               </span>
               <span className="font-heading font-extrabold text-xl text-emerald-700 dark:text-emerald-300">
@@ -204,11 +185,11 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
 
           {/* Preview Image */}
           {previewUrl && (
-            <div className="flex justify-center p-4 bg-slate-100 dark:bg-slate-800/40 rounded-2xl border border-slate-200 dark:border-slate-700">
+            <div className="flex justify-center p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800">
               <img
                 src={previewUrl}
                 alt="Compressed preview"
-                className="max-h-64 object-contain rounded-lg shadow-md"
+                className="max-h-64 object-contain rounded-xl shadow-md"
               />
             </div>
           )}
@@ -216,11 +197,11 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button variant="primary" size="lg" onClick={handleDownload} className="w-full sm:w-auto">
-              <Download className="w-5 h-5 mr-2" />
+              <Download className="w-5 h-5 mr-2" strokeWidth={2} />
               Download Compressed Image
             </Button>
             <Button variant="outline" size="lg" onClick={handleReset} className="w-full sm:w-auto">
-              <RotateCcw className="w-4 h-4 mr-2" />
+              <RotateCcw className="w-4 h-4 mr-2" strokeWidth={1.75} />
               Compress Another Image
             </Button>
           </div>
@@ -229,8 +210,8 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
 
       {/* Error State */}
       {status === 'error' && (
-        <div className="p-6 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-center space-y-4">
-          <AlertCircle className="w-12 h-12 text-red-600 dark:text-red-400 mx-auto" />
+        <div className="p-6 rounded-3xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-center space-y-4">
+          <AlertCircle className="w-12 h-12 text-red-600 dark:text-red-400 mx-auto" strokeWidth={1.75} />
           <h3 className="text-lg font-bold text-red-900 dark:text-red-100 font-heading">
             Compression Failed
           </h3>

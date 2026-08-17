@@ -1,5 +1,9 @@
-import { PDFDocument } from 'pdf-lib';
 import { ValidationResult } from './validation';
+
+async function getPdfLib() {
+  const { PDFDocument } = await import('pdf-lib');
+  return PDFDocument;
+}
 
 export function validatePdfFile(
   file: File,
@@ -34,6 +38,7 @@ export function validatePdfFile(
 
 export async function getPdfMetadata(file: File): Promise<{ pageCount: number; fileSize: number }> {
   try {
+    const PDFDocument = await getPdfLib();
     const arrayBuffer = await file.arrayBuffer();
     const pdfDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
     return {
@@ -54,7 +59,6 @@ export function parsePageRange(rangeStr: string, totalPages: number): number[] {
   }
 
   const cleanStr = rangeStr.trim();
-  // Validate characters: allowed digits, hyphens, commas, spaces
   if (!/^[0-9\s,-]+$/.test(cleanStr)) {
     throw new Error('Invalid characters in page range. Use numbers, hyphens (-), and commas (,).');
   }
@@ -114,6 +118,7 @@ export async function mergePdfs(files: File[]): Promise<Blob> {
     throw new Error('Please select at least two PDF files to merge.');
   }
 
+  const PDFDocument = await getPdfLib();
   const mergedPdf = await PDFDocument.create();
 
   for (const file of files) {
@@ -136,8 +141,9 @@ export async function splitPdf(file: File, pageRangeStr: string): Promise<{ blob
     throw new Error('No PDF file provided.');
   }
 
+  const PDFDocument = await getPdfLib();
   const arrayBuffer = await file.arrayBuffer();
-  let srcDoc: PDFDocument;
+  let srcDoc: any;
   try {
     srcDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   } catch (err: any) {
@@ -149,7 +155,7 @@ export async function splitPdf(file: File, pageRangeStr: string): Promise<{ blob
 
   const splitDoc = await PDFDocument.create();
   const copiedPages = await splitDoc.copyPages(srcDoc, pageIndices);
-  copiedPages.forEach((page) => splitDoc.addPage(page));
+  copiedPages.forEach((page: any) => splitDoc.addPage(page));
 
   const pdfBytes = await splitDoc.save();
   return {

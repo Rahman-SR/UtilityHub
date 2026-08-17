@@ -9,15 +9,15 @@ export interface BreadcrumbItem {
 
 export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
   return (
-    <nav aria-label="Breadcrumb" className="flex items-center space-x-1.5 text-xs text-slate-500 dark:text-slate-400 py-3">
+    <nav aria-label="Breadcrumb" className="flex items-center space-x-1.5 text-xs text-slate-500 dark:text-slate-400 py-1">
       <Link href="/" className="flex items-center hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-        <Home className="w-3.5 h-3.5 mr-1" />
+        <Home className="w-3.5 h-3.5 mr-1" strokeWidth={1.75} />
         <span>Home</span>
       </Link>
 
       {items.map((item, index) => (
         <React.Fragment key={index}>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-600" />
+          <ChevronRight className="w-3.5 h-3.5 text-slate-400 dark:text-slate-600" strokeWidth={1.75} />
           {item.href ? (
             <Link href={item.href} className="hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors">
               {item.label}

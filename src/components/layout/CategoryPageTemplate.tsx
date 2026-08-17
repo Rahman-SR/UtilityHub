@@ -28,7 +28,7 @@ export function CategoryPageTemplate({ categoryId }: { categoryId: string }) {
         </p>
       </div>
 
-      {/* Available Tools Grid — DIRECTLY FRONT AND CENTER */}
+      {/* Available Tools Grid */}
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="font-heading font-black text-xl sm:text-2xl text-slate-900 dark:text-slate-100">
@@ -37,13 +37,13 @@ export function CategoryPageTemplate({ categoryId }: { categoryId: string }) {
         </div>
 
         {tools.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {tools.map((tool) => (
               <ToolCard key={tool.id} tool={tool} />
             ))}
           </div>
         ) : (
-          <div className="p-12 text-center bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 text-slate-500">
+          <div className="p-12 text-center bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 text-slate-500 font-medium">
             No tools found in this category yet.
           </div>
         )}

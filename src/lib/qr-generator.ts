@@ -1,5 +1,3 @@
-import QRCode from 'qrcode';
-
 export interface QrOptions {
   width?: number;
   errorCorrectionLevel?: 'L' | 'M' | 'Q' | 'H';
@@ -15,6 +13,7 @@ export async function generateQrDataUrl(text: string, options: QrOptions = {}): 
     throw new Error('Please enter text or a URL to generate a QR code.');
   }
 
+  const QRCode = (await import('qrcode')).default;
   const { width = 300, errorCorrectionLevel = 'M', margin = 2, color = { dark: '#000000', light: '#FFFFFF' } } = options;
 
   return QRCode.toDataURL(text.trim(), {

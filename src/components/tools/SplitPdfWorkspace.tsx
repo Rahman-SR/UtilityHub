@@ -8,7 +8,8 @@ import { Button } from '../ui/Button';
 import { validatePdfFile, getPdfMetadata, splitPdf, parsePageRange } from '@/lib/pdf-engine';
 import { downloadBlob, getOutputFilename } from '@/lib/download';
 import { formatFileSize } from '@/lib/utils';
-import { Scissors, Download, RotateCcw, CheckCircle2, AlertCircle, Loader2, FileText, Info } from 'lucide-react';
+import { SingleFilePreviewCard } from '../file-workspace/SingleFilePreviewCard';
+import { Scissors, Download, RotateCcw, CheckCircle2, AlertCircle, Loader2, Info } from 'lucide-react';
 
 export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
   const [status, setStatus] = useState<'initial' | 'file_selected' | 'processing' | 'success' | 'error'>('initial');
@@ -35,7 +36,6 @@ export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
       const meta = await getPdfMetadata(selectedFile);
       setFile(selectedFile);
       setPageCount(meta.pageCount);
-      // Pre-fill default range (e.g. 1-totalPages or 1)
       const defaultRange = meta.pageCount > 1 ? `1-${meta.pageCount}` : '1';
       setPageRangeStr(defaultRange);
       handleRangeChange(defaultRange, meta.pageCount);
@@ -104,7 +104,7 @@ export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 md:p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl space-y-6">
+    <div className="w-full max-w-4xl mx-auto p-6 md:p-8 bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl space-y-6">
       {/* Upload Zone */}
       {status === 'initial' && (
         <DropZone
@@ -117,30 +117,13 @@ export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
       {/* Selected / Processing */}
       {(status === 'file_selected' || status === 'processing') && file && (
         <div className="space-y-6">
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
-                <FileText className="w-5 h-5" />
-              </div>
-              <div className="truncate">
-                <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 truncate">{file.name}</h4>
-                <p className="text-xs text-slate-500">
-                  Total Pages: {pageCount} • Size: {formatFileSize(file.size)}
-                </p>
-              </div>
-            </div>
-
-            <Button variant="ghost" size="sm" onClick={handleReset} disabled={status === 'processing'}>
-              <RotateCcw className="w-4 h-4 mr-1" />
-              Change PDF
-            </Button>
-          </div>
+          <SingleFilePreviewCard file={file} onReplaceFile={handleReset} />
 
           {/* Page Selection Controls */}
-          <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 space-y-4">
-            <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center">
-              <Scissors className="w-4 h-4 mr-2 text-blue-600" />
-              Select Pages to Extract
+          <div className="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-800 space-y-4">
+            <h4 className="text-sm font-extrabold text-slate-900 dark:text-slate-100 flex items-center">
+              <Scissors className="w-4 h-4 mr-2 text-blue-600 dark:text-indigo-400" strokeWidth={1.75} />
+              Select Pages to Extract ({pageCount} Total Pages)
             </h4>
 
             <Input
@@ -154,8 +137,8 @@ export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
             />
 
             {!rangeError && parsedCount > 0 && (
-              <div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 text-xs font-semibold text-blue-800 dark:text-blue-200 flex items-center space-x-2">
-                <Info className="w-4 h-4 shrink-0 text-blue-600" />
+              <div className="p-3.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800 text-xs font-bold text-blue-800 dark:text-blue-200 flex items-center space-x-2">
+                <Info className="w-4 h-4 shrink-0 text-blue-600 dark:text-indigo-400" strokeWidth={1.75} />
                 <span>Will extract {parsedCount} page{parsedCount > 1 ? 's' : ''} into a new PDF document.</span>
               </div>
             )}
@@ -186,23 +169,23 @@ export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
       {/* Success State */}
       {status === 'success' && splitBlob && file && (
         <div className="space-y-6">
-          <div className="p-6 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center space-y-3">
-            <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto" />
+          <div className="p-6 rounded-3xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-center space-y-3">
+            <CheckCircle2 className="w-12 h-12 text-emerald-600 dark:text-emerald-400 mx-auto" strokeWidth={1.75} />
             <h3 className="text-xl font-extrabold text-emerald-900 dark:text-emerald-100 font-heading">
               PDF Pages Extracted Successfully!
             </h3>
-            <p className="text-xs text-emerald-700 dark:text-emerald-300">
+            <p className="text-xs text-emerald-700 dark:text-emerald-300 font-semibold">
               Extracted {parsedCount} pages from &quot;{file.name}&quot; • Output size: {formatFileSize(splitBlob.size)}
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button variant="primary" size="lg" onClick={handleDownload} className="w-full sm:w-auto">
-              <Download className="w-5 h-5 mr-2" />
+              <Download className="w-5 h-5 mr-2" strokeWidth={2} />
               Download Extracted PDF ({getOutputFilename(file.name, 'split', 'pdf')})
             </Button>
             <Button variant="outline" size="lg" onClick={handleReset} className="w-full sm:w-auto">
-              <RotateCcw className="w-4 h-4 mr-2" />
+              <RotateCcw className="w-4 h-4 mr-2" strokeWidth={1.75} />
               Split Another PDF
             </Button>
           </div>
@@ -211,8 +194,8 @@ export function SplitPdfWorkspace({ tool }: { tool: ToolMetadata }) {
 
       {/* Error State */}
       {status === 'error' && (
-        <div className="p-6 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-center space-y-4">
-          <AlertCircle className="w-12 h-12 text-red-600 dark:text-red-400 mx-auto" />
+        <div className="p-6 rounded-3xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-center space-y-4">
+          <AlertCircle className="w-12 h-12 text-red-600 dark:text-red-400 mx-auto" strokeWidth={1.75} />
           <h3 className="text-lg font-bold text-red-900 dark:text-red-100 font-heading">PDF Split Error</h3>
           <p className="text-xs text-red-700 dark:text-red-300">
             {errorMessage || 'Unable to split PDF file.'}

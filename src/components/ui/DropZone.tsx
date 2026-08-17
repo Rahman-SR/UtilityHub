@@ -35,14 +35,14 @@ export function DropZone({
     e.preventDefault();
     setIsDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const filesArray = Array.from(e.dataTransfer.files);
+      const filesArray: File[] = Array.from(e.dataTransfer.files);
       if (onFilesSelected) onFilesSelected(filesArray);
     }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const filesArray = Array.from(e.target.files);
+      const filesArray: File[] = Array.from(e.target.files);
       if (onFilesSelected) onFilesSelected(filesArray);
     }
   };
@@ -54,10 +54,10 @@ export function DropZone({
       onDrop={handleDrop}
       onClick={() => fileInputRef.current?.click()}
       className={cn(
-        'relative group cursor-pointer border-2 border-dashed rounded-3xl p-8 md:p-12 text-center transition-all duration-200',
+        'relative group cursor-pointer border-2 border-dashed rounded-3xl p-6 sm:p-8 md:p-10 text-center transition-all duration-200',
         isDragging
-          ? 'border-indigo-500 bg-indigo-100/70 dark:bg-indigo-950/60 scale-[1.01] shadow-xl shadow-indigo-500/15'
-          : 'border-indigo-200 dark:border-indigo-900/60 bg-indigo-50/50 dark:bg-indigo-950/20 hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50/80 dark:hover:bg-indigo-950/40 shadow-xs'
+          ? 'border-blue-500 bg-blue-100/70 dark:bg-blue-950/60 scale-[1.01] shadow-xl shadow-blue-500/15'
+          : 'border-blue-200 dark:border-indigo-900/60 bg-blue-50/50 dark:bg-indigo-950/20 hover:border-blue-400 dark:hover:border-indigo-600 hover:bg-blue-50/80 dark:hover:bg-indigo-950/40 shadow-xs'
       )}
     >
       <input
@@ -69,13 +69,13 @@ export function DropZone({
         onChange={handleFileChange}
       />
 
-      <div className="flex flex-col items-center justify-center space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center group-hover:scale-110 group-hover:rotate-2 transition-all duration-200 shadow-sm border border-indigo-200/50 dark:border-indigo-800/50">
-          <UploadCloud className="w-8 h-8" />
+      <div className="flex flex-col items-center justify-center space-y-3">
+        <div className="w-14 h-14 rounded-2xl bg-blue-100 dark:bg-indigo-950 text-blue-600 dark:text-indigo-400 flex items-center justify-center group-hover:scale-105 group-hover:rotate-2 transition-all duration-200 shadow-xs border border-blue-200/50 dark:border-indigo-800/50">
+          <UploadCloud className="w-7 h-7" strokeWidth={1.75} />
         </div>
 
-        <div className="space-y-1.5 max-w-md">
-          <h3 className="text-lg font-extrabold text-slate-900 dark:text-slate-100 font-heading">
+        <div className="space-y-1 max-w-md">
+          <h3 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-slate-100 font-heading">
             Choose files or drag & drop here
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
@@ -83,13 +83,13 @@ export function DropZone({
           </p>
         </div>
 
-        <Button variant="primary" size="md" type="button" className="mt-2 pointer-events-none shadow-lg shadow-indigo-600/30 group-hover:scale-105 group-hover:bg-indigo-500 group-hover:shadow-xl group-hover:shadow-indigo-600/40">
-          <FileText className="w-4 h-4 mr-2" />
+        <Button variant="primary" size="md" type="button" className="mt-1 pointer-events-none shadow-md shadow-blue-600/20 group-hover:scale-105 group-hover:bg-blue-500">
+          <FileText className="w-4 h-4 mr-2" strokeWidth={1.75} />
           Select File{multiple ? 's' : ''}
         </Button>
 
-        <div className="pt-3 flex items-center justify-center space-x-2 text-xs font-bold text-emerald-700 dark:text-emerald-400">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+        <div className="pt-2 flex items-center justify-center space-x-1.5 text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" strokeWidth={2} />
           <span>100% Private — Files never leave your browser</span>
         </div>
       </div>

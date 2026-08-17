@@ -24,13 +24,13 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
           {/* Left Column Text Content */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Pill Badge (+1 size & BOLD) */}
+            {/* Pill Badge */}
             <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-indigo-950/80 text-blue-900 dark:text-indigo-200 text-xs sm:text-sm font-black tracking-wider uppercase border border-blue-200 dark:border-indigo-800 shadow-xs">
-              <Sparkles className="w-4 h-4 text-blue-600 dark:text-indigo-400" />
-              <span>⚡ 15+ TOOLS • 100% FREE • PRIVATE</span>
+              <Sparkles className="w-4 h-4 text-blue-600 dark:text-indigo-400" strokeWidth={1.75} />
+              <span>15+ TOOLS • 100% FREE • PRIVATE</span>
             </div>
 
-            {/* Headline (+1 size & BOLD) */}
+            {/* Headline */}
             <h1 className="font-hero-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-slate-900 dark:text-slate-100 tracking-wider leading-[0.95] uppercase font-black">
               ONE TOOLBOX. <br />
               <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-violet-400 text-transparent bg-clip-text">
@@ -38,27 +38,27 @@ export default function HomePage() {
               </span>
             </h1>
 
-            {/* Subtitle (+1 size & BOLD) */}
+            {/* Subtitle */}
             <p className="text-base sm:text-lg md:text-xl text-slate-800 dark:text-slate-200 max-w-2xl leading-relaxed font-black uppercase tracking-wide">
               POWERFUL EVERYDAY TOOLS FOR IMAGES, PDFS, CALCULATIONS, STUDENTS AND MORE. NO SIGNUP. NO LIMITS.
             </p>
 
-            {/* 4 Trust Chips (+1 size & BOLD) */}
+            {/* 4 Trust Chips */}
             <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
               <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Zap className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <Zap className="w-4 h-4 text-blue-600 dark:text-blue-400" strokeWidth={1.75} />
                 <span>BLAZING FAST</span>
               </div>
               <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400" strokeWidth={1.75} />
                 <span>100% FREE</span>
               </div>
               <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <Lock className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <Lock className="w-4 h-4 text-indigo-600 dark:text-indigo-400" strokeWidth={1.75} />
                 <span>NO SIGNUP</span>
               </div>
               <div className="flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs">
-                <ShieldCheck className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+                <ShieldCheck className="w-4 h-4 text-purple-600 dark:text-purple-400" strokeWidth={1.75} />
                 <span>PRIVACY FIRST</span>
               </div>
             </div>
@@ -71,7 +71,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Top Categories Section (5-Column Desktop Grid) — DIRECTLY TO FRONT */}
+      {/* Top Categories Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="font-heading font-black text-xl sm:text-2xl text-slate-900 dark:text-slate-100">
@@ -82,7 +82,7 @@ export default function HomePage() {
             className="inline-flex items-center space-x-1 text-xs sm:text-sm font-extrabold text-blue-600 dark:text-indigo-400 hover:underline"
           >
             <span>Explore all</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4" strokeWidth={2} />
           </Link>
         </div>
 
@@ -93,11 +93,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Popular Tools Section (Compact Horizontal Grid) — DIRECTLY TO FRONT */}
+      {/* Popular Tools Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <Flame className="w-5 h-5 text-orange-500" />
+            <Flame className="w-5 h-5 text-orange-500" strokeWidth={1.75} />
             <h2 className="font-heading font-black text-xl sm:text-2xl text-slate-900 dark:text-slate-100">
               Popular Tools
             </h2>
@@ -107,7 +107,7 @@ export default function HomePage() {
             className="inline-flex items-center space-x-1 text-xs sm:text-sm font-extrabold text-blue-600 dark:text-indigo-400 hover:underline"
           >
             <span>View all tools</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4" strokeWidth={2} />
           </Link>
         </div>
 
@@ -128,7 +128,7 @@ export default function HomePage() {
         <div className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-xs grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-2.5">
             <div className="w-11 h-11 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800 flex items-center justify-center">
-              <ShieldCheck className="w-5 h-5" />
+              <ShieldCheck className="w-5 h-5" strokeWidth={1.75} />
             </div>
             <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
               100% Local Privacy Engine
@@ -140,7 +140,7 @@ export default function HomePage() {
 
           <div className="space-y-2.5">
             <div className="w-11 h-11 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200/80 dark:border-amber-800 flex items-center justify-center">
-              <Zap className="w-5 h-5" />
+              <Zap className="w-5 h-5" strokeWidth={1.75} />
             </div>
             <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
               Blazing Fast Speed
@@ -152,7 +152,7 @@ export default function HomePage() {
 
           <div className="space-y-2.5">
             <div className="w-11 h-11 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200/80 dark:border-blue-800 flex items-center justify-center">
-              <Lock className="w-5 h-5" />
+              <Lock className="w-5 h-5" strokeWidth={1.75} />
             </div>
             <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
               Free & Unrestricted

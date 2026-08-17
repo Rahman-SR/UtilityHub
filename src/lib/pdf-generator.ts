@@ -1,4 +1,3 @@
-import { jsPDF } from 'jspdf';
 import { loadImage } from './image-processing';
 
 export interface PdfOptions {
@@ -7,28 +6,58 @@ export interface PdfOptions {
   marginMm?: number;
 }
 
-export async function imagesToPdf(files: File[], options: PdfOptions = {}): Promise<Blob> {
-  if (!files || files.length === 0) {
+export interface ImageInputItem {
+  file: File;
+  rotation?: number; // 0, 90, 180, 270
+}
+
+export async function imagesToPdf(
+  inputItems: (File | ImageInputItem)[],
+  options: PdfOptions = {}
+): Promise<Blob> {
+  if (!inputItems || inputItems.length === 0) {
     throw new Error('No images provided for PDF conversion.');
   }
 
+  const normalizedItems: ImageInputItem[] = inputItems.map((item) =>
+    item instanceof File ? { file: item, rotation: 0 } : item
+  );
+
+  const { jsPDF } = await import('jspdf');
   const { pageSize = 'a4', orientation = 'portrait', marginMm = 10 } = options;
 
-  let doc: jsPDF | null = null;
+  let doc: any = null;
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
+  for (let i = 0; i < normalizedItems.length; i++) {
+    const { file, rotation = 0 } = normalizedItems[i];
     const { img, objectUrl } = await loadImage(file);
 
-    // Create canvas to convert image to clean data URL
+    const normRotation = ((rotation % 360) + 360) % 360;
+    const is90or270 = normRotation === 90 || normRotation === 270;
+
+    const targetWidth = is90or270 ? img.naturalHeight : img.naturalWidth;
+    const targetHeight = is90or270 ? img.naturalWidth : img.naturalHeight;
+
     const canvas = document.createElement('canvas');
-    canvas.width = img.naturalWidth;
-    canvas.height = img.naturalHeight;
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
     const ctx = canvas.getContext('2d');
     if (!ctx) {
       URL.revokeObjectURL(objectUrl);
       throw new Error('Canvas context failed.');
     }
+
+    if (normRotation === 90) {
+      ctx.translate(canvas.width, 0);
+      ctx.rotate((90 * Math.PI) / 180);
+    } else if (normRotation === 180) {
+      ctx.translate(canvas.width, canvas.height);
+      ctx.rotate((180 * Math.PI) / 180);
+    } else if (normRotation === 270) {
+      ctx.translate(0, canvas.height);
+      ctx.rotate((270 * Math.PI) / 180);
+    }
+
     ctx.drawImage(img, 0, 0);
     const imgDataUrl = canvas.toDataURL('image/jpeg', 0.92);
     URL.revokeObjectURL(objectUrl);
@@ -36,11 +65,11 @@ export async function imagesToPdf(files: File[], options: PdfOptions = {}): Prom
     if (i === 0) {
       if (pageSize === 'fit') {
         doc = new jsPDF({
-          orientation: img.naturalWidth > img.naturalHeight ? 'landscape' : 'portrait',
+          orientation: targetWidth > targetHeight ? 'landscape' : 'portrait',
           unit: 'px',
-          format: [img.naturalWidth, img.naturalHeight],
+          format: [targetWidth, targetHeight],
         });
-        doc.addImage(imgDataUrl, 'JPEG', 0, 0, img.naturalWidth, img.naturalHeight);
+        doc.addImage(imgDataUrl, 'JPEG', 0, 0, targetWidth, targetHeight);
       } else {
         doc = new jsPDF({
           orientation,
@@ -50,11 +79,10 @@ export async function imagesToPdf(files: File[], options: PdfOptions = {}): Prom
 
         const pageWidth = doc.internal.pageSize.getWidth();
         const pageHeight = doc.internal.pageSize.getHeight();
-
         const printableWidth = pageWidth - marginMm * 2;
         const printableHeight = pageHeight - marginMm * 2;
 
-        const imgRatio = img.naturalWidth / img.naturalHeight;
+        const imgRatio = targetWidth / targetHeight;
         const pageRatio = printableWidth / printableHeight;
 
         let renderWidth = printableWidth;
@@ -73,17 +101,16 @@ export async function imagesToPdf(files: File[], options: PdfOptions = {}): Prom
       }
     } else if (doc) {
       if (pageSize === 'fit') {
-        doc.addPage([img.naturalWidth, img.naturalHeight], img.naturalWidth > img.naturalHeight ? 'landscape' : 'portrait');
-        doc.addImage(imgDataUrl, 'JPEG', 0, 0, img.naturalWidth, img.naturalHeight);
+        doc.addPage([targetWidth, targetHeight], targetWidth > targetHeight ? 'landscape' : 'portrait');
+        doc.addImage(imgDataUrl, 'JPEG', 0, 0, targetWidth, targetHeight);
       } else {
         doc.addPage(pageSize, orientation);
         const pageWidth = doc.internal.pageSize.getWidth();
         const pageHeight = doc.internal.pageSize.getHeight();
-
         const printableWidth = pageWidth - marginMm * 2;
         const printableHeight = pageHeight - marginMm * 2;
 
-        const imgRatio = img.naturalWidth / img.naturalHeight;
+        const imgRatio = targetWidth / targetHeight;
         const pageRatio = printableWidth / printableHeight;
 
         let renderWidth = printableWidth;
