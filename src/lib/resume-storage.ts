@@ -66,15 +66,15 @@ export const INITIAL_RESUME_DATA: ResumeData = {
       id: 'languages',
       type: 'languages',
       title: 'Languages',
-      visible: false,
+      visible: true,
       order: 6,
-      data: { languages: [] },
+      data: { entries: [] },
     },
     {
       id: 'custom',
       type: 'custom',
       title: 'Additional Information',
-      visible: false,
+      visible: true,
       order: 7,
       data: { content: '' },
     },
@@ -88,7 +88,20 @@ export function loadResumeDraft(): ResumeData {
     if (!raw) return INITIAL_RESUME_DATA;
     const parsed = JSON.parse(raw);
     if (parsed && parsed.personal && Array.isArray(parsed.sections)) {
-      return parsed;
+      // Ensure all standard sections exist even in older saved drafts
+      const existingIds = new Set(parsed.sections.map((s: { id: string }) => s.id));
+      const mergedSections = [...parsed.sections];
+      
+      INITIAL_RESUME_DATA.sections.forEach((initialSec) => {
+        if (!existingIds.has(initialSec.id)) {
+          mergedSections.push({ ...initialSec, order: mergedSections.length });
+        }
+      });
+
+      return {
+        ...parsed,
+        sections: mergedSections,
+      };
     }
   } catch {
     // Return default fallback safely

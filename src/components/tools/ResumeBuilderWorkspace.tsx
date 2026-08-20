@@ -37,6 +37,8 @@ import {
   FolderGit2,
   Award,
   FileText,
+  Languages,
+  Sparkles,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
@@ -149,15 +151,17 @@ export function ResumeBuilderWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
           Array.isArray(section.data.entries) &&
           section.data.entries.some((c: CertificationEntry) => c.name)
         );
-      case 'languages':
+      case 'languages': {
+        const langList = section.data.entries || section.data.languages || [];
         return (
-          Array.isArray(section.data.entries) &&
-          section.data.entries.some((l: LanguageEntry) => l.language)
+          Array.isArray(langList) &&
+          langList.some((l: LanguageEntry) => l.language && l.language.trim().length > 0)
         );
+      }
       case 'custom':
-        return (
-          (section.data.bullets && section.data.bullets.some((b: string) => b.trim())) ||
-          (section.data.content && section.data.content.trim().length > 0)
+        return Boolean(
+          (section.data.content && section.data.content.trim().length > 0) ||
+          (Array.isArray(section.data.bullets) && section.data.bullets.some((b: string) => b.trim()))
         );
       default:
         return false;
@@ -1214,6 +1218,215 @@ export function ResumeBuilderWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
               </div>
             )}
           </div>
+
+          {/* 8. LANGUAGES CARD */}
+          <div className="rounded-3xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+            <button
+              type="button"
+              onClick={() => toggleAccordion('languages')}
+              className="w-full p-4 sm:p-5 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/40 border-b border-slate-100 dark:border-slate-800/60 cursor-pointer text-left"
+            >
+              <div className="flex items-center space-x-2">
+                <Languages className="w-4 h-4 text-blue-600" strokeWidth={2} />
+                <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
+                  Languages (Optional)
+                </h3>
+              </div>
+              {openSections.languages ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+            </button>
+
+            {openSections.languages && (
+              <div className="p-4 sm:p-6 space-y-4">
+                <div className="flex items-center justify-end">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const newLang: LanguageEntry = {
+                        id: String(Date.now()),
+                        language: '',
+                        proficiency: 'Fluent',
+                      };
+                      setData((prev) => ({
+                        ...prev,
+                        sections: prev.sections.map((s) =>
+                          s.id === 'languages'
+                            ? { ...s, data: { entries: [...(s.data.entries || s.data.languages || []), newLang] } }
+                            : s
+                        ),
+                      }));
+                    }}
+                    className="cursor-pointer text-xs"
+                  >
+                    <Plus className="w-3.5 h-3.5 mr-1" strokeWidth={2} />
+                    <span>Add Language</span>
+                  </Button>
+                </div>
+
+                {(data.sections.find((s) => s.id === 'languages')?.data.entries || data.sections.find((s) => s.id === 'languages')?.data.languages || []).length === 0 && (
+                  <p className="text-xs text-slate-400 italic text-center py-2">
+                    No languages added yet. Click &quot;Add Language&quot; to specify your spoken/written languages.
+                  </p>
+                )}
+
+                {(data.sections.find((s) => s.id === 'languages')?.data.entries || data.sections.find((s) => s.id === 'languages')?.data.languages || []).map(
+                  (lang: LanguageEntry, lIdx: number) => (
+                    <div
+                      key={lang.id}
+                      className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 space-y-3"
+                    >
+                      <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-slate-800 pb-2">
+                        <span className="text-xs font-black uppercase text-blue-600">
+                          Language #{lIdx + 1}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setData((prev) => ({
+                              ...prev,
+                              sections: prev.sections.map((s) =>
+                                s.id === 'languages'
+                                  ? {
+                                      ...s,
+                                      data: {
+                                        entries: (s.data.entries || s.data.languages || []).filter(
+                                          (l: LanguageEntry) => l.id !== lang.id
+                                        ),
+                                      },
+                                    }
+                                  : s
+                              ),
+                            }));
+                          }}
+                          className="text-slate-400 hover:text-rose-600 cursor-pointer"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <Input
+                          label="Language"
+                          placeholder="e.g. English, Spanish, German, French"
+                          value={lang.language}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setData((prev) => ({
+                              ...prev,
+                              sections: prev.sections.map((s) =>
+                                s.id === 'languages'
+                                  ? {
+                                      ...s,
+                                      data: {
+                                        entries: (s.data.entries || s.data.languages || []).map((item: LanguageEntry) =>
+                                          item.id === lang.id ? { ...item, language: val } : item
+                                        ),
+                                      },
+                                    }
+                                  : s
+                              ),
+                            }));
+                          }}
+                        />
+                        <div className="space-y-1.5">
+                          <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                            Proficiency Level
+                          </label>
+                          <select
+                            value={lang.proficiency || 'Fluent'}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setData((prev) => ({
+                                ...prev,
+                                sections: prev.sections.map((s) =>
+                                  s.id === 'languages'
+                                    ? {
+                                        ...s,
+                                        data: {
+                                          entries: (s.data.entries || s.data.languages || []).map((item: LanguageEntry) =>
+                                            item.id === lang.id ? { ...item, proficiency: val } : item
+                                          ),
+                                        },
+                                      }
+                                    : s
+                                ),
+                              }));
+                            }}
+                            className="w-full p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-slate-100 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                          >
+                            <option value="Native / Bilingual">Native / Bilingual</option>
+                            <option value="Fluent">Fluent</option>
+                            <option value="Professional Working">Professional Working</option>
+                            <option value="Conversational">Conversational</option>
+                            <option value="Elementary">Elementary</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* 9. ADDITIONAL INFORMATION CARD */}
+          <div className="rounded-3xl bg-white dark:bg-[#121829] border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+            <button
+              type="button"
+              onClick={() => toggleAccordion('custom')}
+              className="w-full p-4 sm:p-5 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/40 border-b border-slate-100 dark:border-slate-800/60 cursor-pointer text-left"
+            >
+              <div className="flex items-center space-x-2">
+                <Sparkles className="w-4 h-4 text-blue-600" strokeWidth={2} />
+                <h3 className="font-heading font-extrabold text-base text-slate-900 dark:text-slate-100">
+                  Additional Information (Optional)
+                </h3>
+              </div>
+              {openSections.custom ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+            </button>
+
+            {openSections.custom && (
+              <div className="p-4 sm:p-6 space-y-4">
+                <div className="space-y-3">
+                  <Input
+                    label="Section Title"
+                    placeholder="e.g. Additional Information, Honors & Awards, Publications, Volunteer Work"
+                    value={data.sections.find((s) => s.id === 'custom')?.title || 'Additional Information'}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setData((prev) => ({
+                        ...prev,
+                        sections: prev.sections.map((s) =>
+                          s.id === 'custom' ? { ...s, title: val } : s
+                        ),
+                      }));
+                    }}
+                  />
+
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
+                      Content / Details (Paragraph or Multi-line Points)
+                    </label>
+                    <textarea
+                      rows={4}
+                      placeholder="Add any extra accomplishments, extracurricular leadership, publications, patents, interests, or references..."
+                      value={data.sections.find((s) => s.id === 'custom')?.data.content || ''}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setData((prev) => ({
+                          ...prev,
+                          sections: prev.sections.map((s) =>
+                            s.id === 'custom' ? { ...s, data: { ...s.data, content: val } } : s
+                          ),
+                        }));
+                      }}
+                      className="w-full p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-xs font-medium text-slate-900 dark:text-slate-100 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* RIGHT COLUMN: STICKY LIVE ATS A4 RESUME PREVIEW (lg:col-span-6 sticky top-20) */}
@@ -1434,6 +1647,23 @@ export function ResumeBuilderWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
                             </span>
                           </div>
                         ))}
+                      </div>
+                    )}
+
+                    {/* Languages */}
+                    {section.type === 'languages' && (
+                      <p className="text-[10pt] text-slate-800 font-medium leading-relaxed">
+                        {(section.data.entries || section.data.languages || [])
+                          .filter((l: LanguageEntry) => l.language && l.language.trim())
+                          .map((l: LanguageEntry) => (l.proficiency ? `${l.language} (${l.proficiency})` : l.language))
+                          .join(' • ')}
+                      </p>
+                    )}
+
+                    {/* Additional Information / Custom */}
+                    {section.type === 'custom' && (
+                      <div className="text-[10pt] text-slate-800 leading-relaxed font-normal whitespace-pre-line">
+                        {section.data.content}
                       </div>
                     )}
                   </div>
