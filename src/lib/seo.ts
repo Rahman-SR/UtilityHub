@@ -18,13 +18,13 @@ export function constructMetadata({
 } = {}): Metadata {
   const metaTitle = title
     ? `${title} | ${BRAND_CONFIG.name}`
-    : `${BRAND_CONFIG.name} — ${BRAND_CONFIG.tagline}`;
+    : `${BRAND_CONFIG.name} – Everyday Online Tools`;
 
   return {
     title: metaTitle,
     description,
     keywords: [
-      'utility hub',
+      'yoursthing',
       'online tools',
       'image compressor',
       'merge pdf',

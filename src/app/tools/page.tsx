@@ -8,10 +8,10 @@ import { constructMetadata } from '@/lib/seo';
 import { Wrench } from 'lucide-react';
 
 export const metadata = constructMetadata({
-  title: 'All Free Utility Tools — Daily Utility Hub',
+  title: 'All Online Tools | Yoursthing',
   description:
-    'Browse all 16 free online tools for image compression, PDF merging, QR code generation, GST calculation, EMI calculation, and student tools. 100% browser-based.',
-  canonicalUrl: 'https://dailyutilityhub.com/tools',
+    'Browse all 17 free online tools for image compression, PDF editing, financial calculations, student tools, and ATS resume building. 100% browser-based.',
+  canonicalUrl: 'https://yoursthing.online/tools',
 });
 
 export default function AllToolsPage() {

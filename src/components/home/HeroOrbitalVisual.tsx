@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image as ImageIcon, FileText, QrCode, GraduationCap, Calculator, Zap } from 'lucide-react';
+import { Image as ImageIcon, FileText, QrCode, GraduationCap, Calculator } from 'lucide-react';
+import { YoursthingLogoMark } from '../brand/YoursthingLogo';
 
 export function HeroOrbitalVisual() {
   return (
@@ -12,9 +13,9 @@ export function HeroOrbitalVisual() {
       <div className="absolute inset-16 rounded-full border border-indigo-100/50 dark:border-indigo-900/30 opacity-40" />
 
       {/* Central Glowing Core Hub Card */}
-      <div className="relative z-10 w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-500 dark:via-indigo-500 dark:to-violet-600 text-white flex items-center justify-center shadow-2xl shadow-indigo-500/40 dark:shadow-indigo-500/60 border-4 border-white/40 dark:border-white/20 animate-orbital-pulse">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner">
-          <Zap className="w-10 h-10 sm:w-12 sm:h-12 fill-current text-white drop-shadow-md" />
+      <div className="relative z-10 w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-white dark:bg-[#121829] text-white flex items-center justify-center shadow-2xl shadow-indigo-500/30 dark:shadow-indigo-500/50 border-4 border-indigo-100 dark:border-indigo-900 animate-orbital-pulse">
+        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-blue-50/80 dark:bg-indigo-950/60 flex items-center justify-center shadow-inner">
+          <YoursthingLogoMark className="w-12 h-12 sm:w-14 sm:h-14 drop-shadow-md" />
         </div>
       </div>
 

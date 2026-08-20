@@ -5,6 +5,7 @@ import { getToolBySlug, TOOLS } from '@/data/tools';
 import { constructMetadata, generateToolJsonLd } from '@/lib/seo';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { ToolPageShell } from '@/components/layout/ToolPageShell';
+import { BRAND_CONFIG } from '@/config/brand';
 
 // Code-split all tool workspace components dynamically to prevent loading unneeded engines
 const ImageCompressorWorkspace = dynamic(() =>
@@ -85,7 +86,7 @@ export async function generateMetadata({ params }: ToolPageProps) {
   return constructMetadata({
     title: `${tool.name} — Free Online Tool`,
     description: tool.description,
-    canonicalUrl: `https://dailyutilityhub.com/tools/${tool.slug}`,
+    canonicalUrl: `${BRAND_CONFIG.domain}/tools/${tool.slug}`,
   });
 }
 

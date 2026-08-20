@@ -9,7 +9,7 @@ import { downloadDataUrl } from '@/lib/download';
 import { QrCode, Download, RotateCcw, Copy, Check, AlertCircle, Settings } from 'lucide-react';
 
 export function QrGeneratorWorkspace({ tool }: { tool: ToolMetadata }) {
-  const [text, setText] = useState<string>('https://dailyutilityhub.com');
+  const [text, setText] = useState<string>('https://yoursthing.online');
   const [qrSize, setQrSize] = useState<number>(300);
   const [ecLevel, setEcLevel] = useState<'L' | 'M' | 'Q' | 'H'>('M');
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
@@ -53,7 +53,7 @@ export function QrGeneratorWorkspace({ tool }: { tool: ToolMetadata }) {
   };
 
   const handleReset = () => {
-    setText('https://dailyutilityhub.com');
+    setText('https://yoursthing.online');
     setQrSize(300);
     setEcLevel('M');
     setError('');

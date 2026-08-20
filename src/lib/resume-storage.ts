@@ -1,6 +1,7 @@
 import { ResumeData } from '@/types/resume';
 
-const RESUME_STORAGE_KEY = 'daily_utility_hub_resume_draft_v1';
+const RESUME_STORAGE_KEY = 'yoursthing_resume_draft_v1';
+const LEGACY_STORAGE_KEY = 'daily_utility_hub_resume_draft_v1';
 
 export const INITIAL_RESUME_DATA: ResumeData = {
   personal: {
@@ -49,7 +50,7 @@ export const INITIAL_RESUME_DATA: ResumeData = {
       id: 'projects',
       type: 'projects',
       title: 'Projects',
-      visible: false,
+      visible: true,
       order: 4,
       data: { entries: [] },
     },
@@ -57,7 +58,7 @@ export const INITIAL_RESUME_DATA: ResumeData = {
       id: 'certifications',
       type: 'certifications',
       title: 'Certifications',
-      visible: false,
+      visible: true,
       order: 5,
       data: { entries: [] },
     },
@@ -67,15 +68,15 @@ export const INITIAL_RESUME_DATA: ResumeData = {
       title: 'Languages',
       visible: false,
       order: 6,
-      data: { entries: [] },
+      data: { languages: [] },
     },
     {
       id: 'custom',
       type: 'custom',
-      title: 'Custom Section',
+      title: 'Additional Information',
       visible: false,
       order: 7,
-      data: { title: 'Achievements & Training', bullets: [] },
+      data: { content: '' },
     },
   ],
 };
@@ -83,7 +84,7 @@ export const INITIAL_RESUME_DATA: ResumeData = {
 export function loadResumeDraft(): ResumeData {
   if (typeof window === 'undefined') return INITIAL_RESUME_DATA;
   try {
-    const raw = localStorage.getItem(RESUME_STORAGE_KEY);
+    const raw = localStorage.getItem(RESUME_STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
     if (!raw) return INITIAL_RESUME_DATA;
     const parsed = JSON.parse(raw);
     if (parsed && parsed.personal && Array.isArray(parsed.sections)) {
@@ -108,6 +109,7 @@ export function clearResumeDraft(): void {
   if (typeof window === 'undefined') return;
   try {
     localStorage.removeItem(RESUME_STORAGE_KEY);
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
   } catch {
     // Ignore
   }

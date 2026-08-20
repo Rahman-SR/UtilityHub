@@ -10,7 +10,7 @@ const getSnapshot = () => true;
 const getServerSnapshot = () => false;
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const isMounted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   if (!isMounted) {
@@ -21,15 +21,17 @@ export function ThemeToggle() {
     );
   }
 
+  const isDark = resolvedTheme === 'dark';
+
   return (
     <Button
       variant="ghost"
       size="sm"
       aria-label="Toggle theme"
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className="w-9 h-9 p-0 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800"
     >
-      {theme === 'dark' ? (
+      {isDark ? (
         <Sun className="w-4 h-4 text-amber-400 transition-transform rotate-0 scale-100" />
       ) : (
         <Moon className="w-4 h-4 text-slate-700 transition-transform rotate-0 scale-100" />

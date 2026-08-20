@@ -7,7 +7,7 @@ import { Button } from '../ui/Button';
 import { QrCode, Download, RotateCcw, Copy, Check } from 'lucide-react';
 
 export function GeneratorWorkspace({ tool }: { tool: ToolMetadata }) {
-  const [text, setText] = useState<string>('https://dailyutilityhub.com');
+  const [text, setText] = useState<string>('https://yoursthing.online');
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -17,7 +17,7 @@ export function GeneratorWorkspace({ tool }: { tool: ToolMetadata }) {
   };
 
   const handleReset = () => {
-    setText('https://dailyutilityhub.com');
+    setText('https://yoursthing.online');
   };
 
   return (

@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { MobileNav } from './MobileNav';
-import { BRAND_CONFIG } from '@/config/brand';
-import { Zap, Menu, Search } from 'lucide-react';
+import { YoursthingLogoMark } from '../brand/YoursthingLogo';
+import { Menu, Search } from 'lucide-react';
 import { SearchBar } from '../search/SearchBar';
 
 export function Header() {
@@ -16,15 +16,11 @@ export function Header() {
     <header className="sticky top-0 z-40 w-full bg-blue-50/70 dark:bg-[#0B101D]/90 backdrop-blur-xl transition-all duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center space-x-3 group cursor-pointer">
-          <div className="w-10 h-10 rounded-2xl bg-blue-600 dark:bg-gradient-to-br dark:from-blue-600 dark:to-indigo-600 text-white flex items-center justify-center font-extrabold text-xl shadow-md shadow-blue-500/25 group-hover:scale-105 group-hover:shadow-lg transition-all duration-200">
-            <Zap className="w-5 h-5 fill-current" strokeWidth={1.75} />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-heading font-extrabold text-lg sm:text-xl text-slate-900 dark:text-slate-100 tracking-tight group-hover:text-blue-600 dark:group-hover:text-indigo-400 transition-colors">
-              {BRAND_CONFIG.name}
-            </span>
-          </div>
+        <Link href="/" className="flex items-center space-x-2.5 group cursor-pointer" aria-label="Yoursthing Home">
+          <YoursthingLogoMark className="w-9 h-9 shrink-0 group-hover:scale-105 transition-transform duration-200 drop-shadow-xs" />
+          <span className="font-heading font-extrabold text-xl text-slate-900 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-indigo-400 transition-colors">
+            Yours<span className="relative">th<span className="inline-block relative">i<span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#F59E0B]" /></span>ng</span>
+          </span>
         </Link>
 
         {/* Desktop Navigation Links (Clean Text Links without unneeded icons) */}

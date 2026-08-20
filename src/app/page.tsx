@@ -11,10 +11,10 @@ import { ShieldCheck, Zap, Lock, Sparkles, ArrowRight, Flame, Target } from 'luc
 import Link from 'next/link';
 
 export const metadata = constructMetadata({
-  title: 'Daily Utility Hub — 100% Free Browser-Based Utility Tools',
+  title: 'Yoursthing – Everyday Online Tools',
   description:
-    'Powerful everyday tools for images, PDFs, financial calculations, students, and QR code generation. 100% free with local browser processing and zero server uploads.',
-  canonicalUrl: 'https://dailyutilityhub.com',
+    'Free browser-based tools for PDFs, images, calculations, students, resumes and everyday digital tasks.',
+  canonicalUrl: 'https://yoursthing.online',
 });
 
 export default function HomePage() {

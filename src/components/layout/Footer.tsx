@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { BRAND_CONFIG } from '@/config/brand';
-import { ShieldCheck, Zap } from 'lucide-react';
+import { YoursthingLogoMark } from '../brand/YoursthingLogo';
+import { ShieldCheck } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -14,17 +15,20 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10 lg:gap-12">
           {/* Brand Info (Spans 2 columns) */}
           <div className="md:col-span-2 space-y-5">
-            <Link href="/" className="inline-flex items-center space-x-3 group">
-              <div className="w-10 h-10 rounded-2xl bg-blue-600 dark:bg-gradient-to-br dark:from-blue-600 dark:to-indigo-600 text-white flex items-center justify-center font-extrabold text-xl shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform duration-200">
-                <Zap className="w-5 h-5 fill-current" />
+            <Link href="/" className="inline-flex items-center space-x-2.5 group cursor-pointer" aria-label="Yoursthing Home">
+              <YoursthingLogoMark className="w-10 h-10 shrink-0 group-hover:scale-105 transition-transform duration-200 drop-shadow-xs" />
+              <div className="flex flex-col">
+                <span className="font-heading font-extrabold text-2xl text-white tracking-tight group-hover:text-blue-400 dark:group-hover:text-indigo-400 transition-colors">
+                  Yours<span className="relative">th<span className="inline-block relative">i<span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#F59E0B]" /></span>ng</span>
+                </span>
+                <span className="text-[11px] font-semibold text-slate-400 tracking-wide mt-0.5">
+                  {BRAND_CONFIG.tagline}
+                </span>
               </div>
-              <span className="font-heading font-black text-2xl text-white tracking-tight group-hover:text-blue-400 dark:group-hover:text-indigo-400 transition-colors">
-                {BRAND_CONFIG.name}
-              </span>
             </Link>
 
             <p className="text-sm text-slate-300 leading-relaxed max-w-md font-medium">
-              Free, fast, and 100% privacy-first online utilities. Compress images, merge PDFs, generate QR codes, and calculate finances directly inside your browser without server uploads.
+              Free, fast, and 100% privacy-first online utilities. Compress images, merge PDFs, generate QR codes, build resumes, and calculate finances directly inside your browser without server uploads.
             </p>
 
             {/* Privacy Badge */}

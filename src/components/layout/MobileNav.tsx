@@ -24,7 +24,7 @@ export function MobileNav({ isOpen, onClose }: MobileNavProps) {
           >
             <div className="flex items-center space-x-3">
               <Wrench className="w-5 h-5 text-blue-600" />
-              <span>All 15 Tools</span>
+              <span>All Tools Directory</span>
             </div>
             <ChevronRight className="w-4 h-4 text-slate-400" />
           </Link>
