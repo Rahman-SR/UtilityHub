@@ -101,8 +101,8 @@ Yoursthing includes 17 specialized tools organized into 5 intuitive categories:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/Rahman-SR/UtilityHub.git
-cd UtilityHub
+git clone https://github.com/Rahman-SR/Yoursthing.git
+cd Yoursthing
 
 # 2. Install dependencies
 npm install
