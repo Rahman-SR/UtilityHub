@@ -10,6 +10,7 @@ import { downloadBlob, getOutputFilename } from '@/lib/download';
 import { formatFileSize } from '@/lib/utils';
 import { SingleFilePreviewCard } from '../file-workspace/SingleFilePreviewCard';
 import { Download, RotateCcw, CheckCircle2, AlertCircle, Loader2, Sparkles, Sliders } from 'lucide-react';
+import { trackToolComplete, trackFileDownload, trackToolError } from '@/lib/analytics';
 
 export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
   const [status, setStatus] = useState<'initial' | 'file_selected' | 'processing' | 'success' | 'error'>('initial');
@@ -31,6 +32,7 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
     if (!validation.isValid) {
       setErrorMessage(validation.error || 'Invalid file format.');
       setStatus('error');
+      trackToolError('Image Compressor', 'invalid_file');
       return;
     }
 
@@ -52,14 +54,17 @@ export function ImageCompressorWorkspace({ tool }: { tool: ToolMetadata }) {
       setPreviewUrl(url);
 
       setStatus('success');
+      trackToolComplete('Image Compressor', 'image');
     } catch (err: unknown) {
       setErrorMessage(err instanceof Error ? err.message : 'Image compression failed. Please try another file.');
       setStatus('error');
+      trackToolError('Image Compressor', 'processing_failed');
     }
   };
 
   const handleDownload = () => {
     if (!compressedBlob || !file) return;
+    trackFileDownload('Image Compressor', file.type || 'image/jpeg');
     const filename = getOutputFilename(file.name, 'compressed', file.name.split('.').pop());
     downloadBlob(compressedBlob, filename);
   };

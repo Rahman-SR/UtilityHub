@@ -10,6 +10,7 @@ import { formatFileSize } from '@/lib/utils';
 import { useSortableFiles } from '@/hooks/useSortableFiles';
 import { FileWorkspaceGrid } from '../file-workspace/FileWorkspaceGrid';
 import { Files, Download, RotateCcw, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { trackToolComplete, trackFileDownload, trackToolError } from '@/lib/analytics';
 
 export function MergePdfWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
   const [status, setStatus] = useState<'initial' | 'files_selected' | 'processing' | 'success' | 'error'>('initial');
@@ -42,6 +43,7 @@ export function MergePdfWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
       if (!v.isValid) {
         setErrorMessage(v.error || `Invalid file "${f.name}".`);
         setStatus('error');
+        trackToolError('Merge PDF', 'invalid_file');
         return;
       }
       validFiles.push(f);
@@ -65,14 +67,17 @@ export function MergePdfWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
       const blob = await mergePdfs(reorderedFiles);
       setMergedBlob(blob);
       setStatus('success');
+      trackToolComplete('Merge PDF', 'pdf');
     } catch (err: unknown) {
       setErrorMessage(err instanceof Error ? err.message : 'Failed to merge PDF files.');
       setStatus('error');
+      trackToolError('Merge PDF', 'processing_failed');
     }
   };
 
   const handleDownload = () => {
     if (!mergedBlob) return;
+    trackFileDownload('Merge PDF', 'application/pdf');
     downloadBlob(mergedBlob, 'merged.pdf');
   };
 

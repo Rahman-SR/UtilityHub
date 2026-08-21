@@ -17,6 +17,7 @@ import {
   INITIAL_RESUME_DATA,
 } from '@/lib/resume-storage';
 import { downloadResumePdf, printResume } from '@/lib/resume-pdf';
+import { trackResumeExport, trackFileDownload } from '@/lib/analytics';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import {
@@ -1460,7 +1461,13 @@ export function ResumeBuilderWorkspace({ tool: _ }: { tool?: ToolMetadata }) {
                 <Button
                   variant="primary"
                   size="sm"
-                  onClick={() => previewRef.current && downloadResumePdf(previewRef.current, data.personal.name)}
+                  onClick={() => {
+                    if (previewRef.current) {
+                      trackResumeExport('ats', 'pdf');
+                      trackFileDownload('Resume Builder', 'application/pdf');
+                      downloadResumePdf(previewRef.current, data.personal.name);
+                    }
+                  }}
                   className="shadow-md shadow-blue-500/20 cursor-pointer text-xs"
                 >
                   <Download className="w-3.5 h-3.5 mr-1" strokeWidth={2} />

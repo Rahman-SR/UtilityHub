@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ToolMetadata } from '@/types/tool';
 import { CATEGORIES } from '@/data/categories';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
@@ -9,6 +9,7 @@ import { RelatedTools } from '@/components/tools/RelatedTools';
 import { AdPlaceholder } from '@/components/ads/AdPlaceholder';
 import { ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { trackToolOpen } from '@/lib/analytics';
 
 interface ToolPageShellProps {
   tool: ToolMetadata;
@@ -18,6 +19,10 @@ interface ToolPageShellProps {
 
 export function ToolPageShell({ tool, children, maxWidthClassName = 'max-w-6xl' }: ToolPageShellProps) {
   const category = CATEGORIES[tool.category];
+
+  useEffect(() => {
+    trackToolOpen(tool.name, tool.category);
+  }, [tool.name, tool.category]);
 
   return (
     <div className={cn('mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-6', maxWidthClassName)}>

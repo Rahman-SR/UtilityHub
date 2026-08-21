@@ -7,6 +7,7 @@ import { Button } from '../ui/Button';
 import { generateQrDataUrl } from '@/lib/qr-generator';
 import { downloadDataUrl } from '@/lib/download';
 import { QrCode, Download, RotateCcw, Copy, Check, AlertCircle, Settings } from 'lucide-react';
+import { trackToolComplete, trackFileDownload } from '@/lib/analytics';
 
 export function QrGeneratorWorkspace({ tool }: { tool: ToolMetadata }) {
   const [text, setText] = useState<string>('https://yoursthing.online');
@@ -49,6 +50,8 @@ export function QrGeneratorWorkspace({ tool }: { tool: ToolMetadata }) {
 
   const handleDownload = () => {
     if (!qrDataUrl) return;
+    trackToolComplete('QR Code Generator', 'quick');
+    trackFileDownload('QR Code Generator', 'image/png');
     downloadDataUrl(qrDataUrl, 'qr-code.png');
   };
 
