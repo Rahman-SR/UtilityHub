@@ -6,6 +6,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'image-compressor',
     name: 'Image Compressor',
     slug: 'image-compressor',
+    seoTitle: 'Image Compressor — Compress Images Online Free',
     description: 'Compress JPG, PNG, and WebP images client-side without quality loss.',
     longDescription: 'Reduce image file sizes instantly directly inside your web browser. Perfect for websites, emails, and online upload limits while keeping images private.',
     category: 'image',
@@ -32,6 +33,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'image-resizer',
     name: 'Image Resizer',
     slug: 'image-resizer',
+    seoTitle: 'Image Resizer — Resize Photos & Dimensions Online',
     description: 'Resize image dimensions (pixels or percentage) with aspect ratio lock.',
     longDescription: 'Quickly resize photos and graphics to custom width and height. Supports maintaining aspect ratio and modern image formats.',
     category: 'image',
@@ -57,6 +59,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'jpg-to-png',
     name: 'JPG to PNG Converter',
     slug: 'jpg-to-png',
+    seoTitle: 'JPG to PNG Converter — Convert Images to PNG Online',
     description: 'Convert JPG images to PNG format instantly in your browser.',
     longDescription: 'Convert JPEG pictures into losslessly stored PNG images with high clarity and compatibility.',
     category: 'image',
@@ -74,6 +77,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'png-to-jpg',
     name: 'PNG to JPG Converter',
     slug: 'png-to-jpg',
+    seoTitle: 'PNG to JPG Converter — Convert Images to JPG Online',
     description: 'Convert PNG graphics to lighter JPG format with background selection.',
     longDescription: 'Convert PNG images to standard JPEG files, automatically handling transparent backgrounds.',
     category: 'image',
@@ -91,6 +95,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'image-to-pdf',
     name: 'Image to PDF',
     slug: 'image-to-pdf',
+    seoTitle: 'Image to PDF Converter — Convert Photos to PDF Document',
     description: 'Convert one or multiple images into a single clean PDF document.',
     longDescription: 'Combine photos, scan receipts, or convert images into a neatly formatted PDF file.',
     category: 'image',
@@ -110,6 +115,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'compress-pdf',
     name: 'Compress PDF',
     slug: 'compress-pdf',
+    seoTitle: 'Compress PDF Online — Reduce PDF File Size Free',
     description: 'Reduce PDF file size online while preserving document quality and searchable text.',
     longDescription: 'Compress PDF documents directly in your web browser. Downsample heavy embedded images and optimize PDF object streams without sending your sensitive files to remote servers.',
     category: 'pdf',
@@ -138,6 +144,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'merge-pdf',
     name: 'Merge PDF',
     slug: 'merge-pdf',
+    seoTitle: 'Merge PDF Online — Combine Multiple PDF Files Free',
     description: 'Combine multiple PDF files into one organized PDF document.',
     longDescription: 'Combine multiple PDF documents into a single cohesive file without uploading files to remote servers.',
     category: 'pdf',
@@ -163,6 +170,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'split-pdf',
     name: 'Split PDF',
     slug: 'split-pdf',
+    seoTitle: 'Split PDF Online — Extract PDF Pages Free',
     description: 'Extract pages or split a PDF into separate files by page range.',
     longDescription: 'Separate pages from a PDF document or save individual page ranges into standalone PDF files.',
     category: 'pdf',
@@ -180,6 +188,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'jpg-to-pdf',
     name: 'JPG to PDF',
     slug: 'jpg-to-pdf',
+    seoTitle: 'JPG to PDF Converter — Convert JPG Photos to PDF Document',
     description: 'Convert JPG pictures to PDF format with page orientation controls.',
     longDescription: 'Turn JPG images into printable, shareable PDF documents with layout adjustment.',
     category: 'pdf',
@@ -199,6 +208,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'gst-calculator',
     name: 'GST Calculator',
     slug: 'gst-calculator',
+    seoTitle: 'GST Calculator — Calculate GST Inclusive & Exclusive Rates Online',
     description: 'Calculate inclusive or exclusive Goods & Services Tax amounts instantly in Indian Rupees (₹).',
     longDescription: 'Quickly calculate GST inclusive and exclusive pricing with standard rates (5%, 12%, 18%, 28%) or custom tax rates in ₹ INR format.',
     category: 'finance',
@@ -223,6 +233,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'emi-calculator',
     name: 'EMI Calculator',
     slug: 'emi-calculator',
+    seoTitle: 'EMI Calculator — Calculate Loan EMI Online Free',
     description: 'Calculate reducing-balance loan EMI payments, total interest, and repayment summaries.',
     longDescription: 'Plan your home, car, or personal loan with accurate Equated Monthly Installment calculations and repayment summaries in ₹ INR.',
     category: 'finance',
@@ -247,6 +258,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'sip-calculator',
     name: 'SIP Calculator',
     slug: 'sip-calculator',
+    seoTitle: 'SIP Calculator — Mutual Fund Investment Growth Forecast',
     description: 'Estimate future returns on Systematic Investment Plans over time in ₹ INR.',
     longDescription: 'Calculate projected wealth growth and compound interest for monthly mutual fund investments.',
     category: 'finance',
@@ -272,6 +284,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'resume-builder',
     name: 'Resume Builder',
     slug: 'resume-builder',
+    seoTitle: 'Free ATS Resume Builder — Create a Professional Resume Online',
     description: 'Create a clean, single-column ATS-friendly resume directly in your browser.',
     longDescription: 'Build an ATS-optimized resume with customizable section ordering, live A4 preview, and instant PDF download. 100% private with local browser storage.',
     category: 'student',
@@ -283,7 +296,7 @@ export const TOOLS: ToolMetadata[] = [
     localProcessing: true,
     howToSteps: [
       { title: 'Enter personal details', description: 'Fill in your name, target title, and contact information.' },
-      { title: 'Add & reorder sections', description: 'Customize section ordering (Summary, Experience, Education, Skills).' },
+      { title: 'Add & reorder sections', description: 'Customize section ordering (Summary, Experience, Education, Skills, Languages).' },
       { title: 'Download PDF', description: 'Review your live A4 ATS preview and download your clean PDF file.' },
     ],
     faqs: [
@@ -297,6 +310,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'percentage-calculator',
     name: 'Percentage Calculator',
     slug: 'percentage-calculator',
+    seoTitle: 'Percentage Calculator — Quick Math & Percentage Change',
     description: 'Calculate percentage increases, decreases, differences, and fractions.',
     longDescription: 'Solves common percentage problems such as finding X% of Y, percentage change, and markups.',
     category: 'student',
@@ -320,6 +334,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'cgpa-calculator',
     name: 'CGPA Calculator',
     slug: 'cgpa-calculator',
+    seoTitle: 'CGPA Calculator — Convert CGPA to Percentage Online',
     description: 'Convert CGPA to percentage or calculate weighted grade point averages.',
     longDescription: 'Easily calculate overall Cumulative Grade Point Average across subjects or semesters with simple or credit-weighted modes.',
     category: 'student',
@@ -343,6 +358,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'attendance-calculator',
     name: 'Attendance Calculator',
     slug: 'attendance-calculator',
+    seoTitle: 'Attendance Calculator — Calculate Target Class Attendance',
     description: 'Calculate minimum classes required to hit your target attendance percentage.',
     longDescription: 'Find out how many more classes you must attend or how many classes you can afford to skip to maintain your target attendance rate (e.g. 75%).',
     category: 'student',
@@ -368,6 +384,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'age-calculator',
     name: 'Age Calculator',
     slug: 'age-calculator',
+    seoTitle: 'Age Calculator — Calculate Exact Age & Birthday Countdown',
     description: 'Calculate exact age in years, months, and days from birth date.',
     longDescription: 'Find your precise age or time difference between two dates down to days and upcoming birthday countdowns.',
     category: 'quick',
@@ -391,6 +408,7 @@ export const TOOLS: ToolMetadata[] = [
     id: 'qr-code-generator',
     name: 'QR Code Generator',
     slug: 'qr-code-generator',
+    seoTitle: 'QR Code Generator — Create Custom QR Codes Online Free',
     description: 'Create high-res downloadable QR codes for URLs, text, Wi-Fi, and contacts.',
     longDescription: 'Generate custom vector or PNG QR codes instantly without watermarks, subscriptions, or external tracking.',
     category: 'quick',
@@ -419,19 +437,14 @@ export function getToolBySlug(slug: string): ToolMetadata | undefined {
   return TOOLS.find((tool) => tool.slug === slug);
 }
 
-export function getToolById(id: string): ToolMetadata | undefined {
-  return TOOLS.find((tool) => tool.id === id);
+export function getToolsByCategory(categoryId: string): ToolMetadata[] {
+  return TOOLS.filter((tool) => tool.category === categoryId);
 }
 
-export function getToolsByCategory(category: string): ToolMetadata[] {
-  return TOOLS.filter((tool) => tool.category === category);
-}
-
-export function getRelatedTools(tool: ToolMetadata): ToolMetadata[] {
-  if (!tool.relatedToolIds || tool.relatedToolIds.length === 0) {
-    return TOOLS.filter((t) => t.category === tool.category && t.id !== tool.id).slice(0, 3);
+export function getRelatedTools(currentTool: ToolMetadata, limit: number = 4): ToolMetadata[] {
+  if (currentTool.relatedToolIds && currentTool.relatedToolIds.length > 0) {
+    const related = TOOLS.filter((t) => currentTool.relatedToolIds?.includes(t.id));
+    if (related.length > 0) return related.slice(0, limit);
   }
-  return tool.relatedToolIds
-    .map((id) => getToolById(id))
-    .filter((t): t is ToolMetadata => t !== undefined);
+  return TOOLS.filter((t) => t.category === currentTool.category && t.id !== currentTool.id).slice(0, limit);
 }

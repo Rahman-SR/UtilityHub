@@ -6,7 +6,7 @@ import { CATEGORIES } from '@/data/categories';
 export function constructMetadata({
   title,
   description = BRAND_CONFIG.description,
-  image = '/og-image.png',
+  image = '/opengraph-image',
   noIndex = false,
   canonicalUrl,
 }: {

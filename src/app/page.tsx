@@ -11,7 +11,6 @@ import { ShieldCheck, Zap, Lock, Sparkles, ArrowRight, Flame, Target } from 'luc
 import Link from 'next/link';
 
 export const metadata = constructMetadata({
-  title: 'Yoursthing – Everyday Online Tools',
   description:
     'Free browser-based tools for PDFs, images, calculations, students, resumes and everyday digital tasks.',
   canonicalUrl: 'https://yoursthing.online',
@@ -32,7 +31,7 @@ export default function HomePage() {
             {/* Pill Badge */}
             <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-indigo-950/80 text-blue-900 dark:text-indigo-200 text-xs sm:text-sm font-black tracking-wider uppercase border border-blue-200 dark:border-indigo-800 shadow-xs">
               <Sparkles className="w-4 h-4 text-blue-600 dark:text-indigo-400" strokeWidth={1.75} />
-              <span>17+ TOOLS • 100% FREE • PRIVATE</span>
+              <span>18+ TOOLS • 100% FREE • PRIVATE</span>
             </div>
 
             {/* Headline */}

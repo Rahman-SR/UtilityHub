@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: ToolPageProps) {
   if (!tool) return {};
 
   return constructMetadata({
-    title: `${tool.name} — Free Online Tool`,
+    title: tool.seoTitle || `${tool.name} — Free Online Tool`,
     description: tool.description,
     canonicalUrl: `${BRAND_CONFIG.domain}/tools/${tool.slug}`,
   });

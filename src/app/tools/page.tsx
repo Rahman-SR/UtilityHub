@@ -5,13 +5,14 @@ import { ToolCard } from '@/components/cards/ToolCard';
 import { Breadcrumbs } from '@/components/layout/Breadcrumbs';
 import { AdPlaceholder } from '@/components/ads/AdPlaceholder';
 import { constructMetadata } from '@/lib/seo';
+import { BRAND_CONFIG } from '@/config/brand';
 import { Wrench } from 'lucide-react';
 
 export const metadata = constructMetadata({
-  title: 'All Online Tools | Yoursthing',
+  title: 'All Online Tools — Free Browser Utilities Directory',
   description:
-    'Browse all 17 free online tools for image compression, PDF editing, financial calculations, student tools, and ATS resume building. 100% browser-based.',
-  canonicalUrl: 'https://yoursthing.online/tools',
+    'Browse all 18 free online tools for image compression, PDF editing, financial calculations, student tools, and ATS resume building. 100% browser-based.',
+  canonicalUrl: `${BRAND_CONFIG.domain}/tools`,
 });
 
 export default function AllToolsPage() {

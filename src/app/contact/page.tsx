@@ -5,8 +5,9 @@ import { constructMetadata } from '@/lib/seo';
 import { Mail, MessageSquare } from 'lucide-react';
 
 export const metadata = constructMetadata({
-  title: `Contact Us — ${BRAND_CONFIG.name}`,
+  title: 'Contact Us — Support & Tool Feedback',
   description: `Get in touch with the ${BRAND_CONFIG.name} team for feedback, tool requests, or support.`,
+  canonicalUrl: `${BRAND_CONFIG.domain}/contact`,
 });
 
 export default function ContactPage() {

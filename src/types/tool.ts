@@ -22,6 +22,7 @@ export interface ToolMetadata {
   family: ToolFamily;
   icon: string;
   keywords: string[];
+  seoTitle?: string;
   featured?: boolean;
   popular?: boolean;
   localProcessing: boolean;

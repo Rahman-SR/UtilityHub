@@ -11,7 +11,7 @@ Yoursthing is a modern, fast, and privacy-first collection of browser-based util
 
 ## Key Features & Tool Directory
 
-Yoursthing includes 17 specialized tools organized into 5 intuitive categories:
+Yoursthing includes 18 specialized tools organized into 5 intuitive categories:
 
 ### 🖼️ Image Tools
 - **Image Compressor** — Compress JPG, PNG, and WebP images with real-time compression ratio calculation without quality loss.

@@ -5,8 +5,9 @@ import { constructMetadata } from '@/lib/seo';
 import { ShieldCheck } from 'lucide-react';
 
 export const metadata = constructMetadata({
-  title: `Privacy Policy — ${BRAND_CONFIG.name}`,
+  title: 'Privacy Policy — 100% Client-Side Processing',
   description: `Our privacy policy explaining our 100% browser-side local file processing commitment.`,
+  canonicalUrl: `${BRAND_CONFIG.domain}/privacy`,
 });
 
 export default function PrivacyPage() {

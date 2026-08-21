@@ -4,8 +4,9 @@ import { BRAND_CONFIG } from '@/config/brand';
 import { constructMetadata } from '@/lib/seo';
 
 export const metadata = constructMetadata({
-  title: `Disclaimer — ${BRAND_CONFIG.name}`,
+  title: 'Disclaimer',
   description: `General disclaimer regarding calculation outputs and utility results on ${BRAND_CONFIG.name}.`,
+  canonicalUrl: `${BRAND_CONFIG.domain}/disclaimer`,
 });
 
 export default function DisclaimerPage() {

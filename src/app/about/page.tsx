@@ -4,8 +4,9 @@ import { BRAND_CONFIG } from '@/config/brand';
 import { constructMetadata } from '@/lib/seo';
 
 export const metadata = constructMetadata({
-  title: `About — ${BRAND_CONFIG.name}`,
+  title: 'About Us — Free Privacy-First Browser Tools',
   description: `Learn more about ${BRAND_CONFIG.name}, our privacy principles, and our fast browser-based utility collection.`,
+  canonicalUrl: `${BRAND_CONFIG.domain}/about`,
 });
 
 export default function AboutPage() {

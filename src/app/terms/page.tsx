@@ -4,8 +4,9 @@ import { BRAND_CONFIG } from '@/config/brand';
 import { constructMetadata } from '@/lib/seo';
 
 export const metadata = constructMetadata({
-  title: `Terms of Service — ${BRAND_CONFIG.name}`,
+  title: 'Terms of Service',
   description: `Terms of service governing the usage of ${BRAND_CONFIG.name} web utilities.`,
+  canonicalUrl: `${BRAND_CONFIG.domain}/terms`,
 });
 
 export default function TermsPage() {
